@@ -2,18 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <PackageId>Kiss.Tools</PackageId>
-    <Version>1.0.0001</Version>
-    <Authors>Kiss</Authors>
-    <Description>包含一些个人使用类库</Description>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/k985187/Kiss.Tools</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIcon>App.ico</PackageIcon>
+    <PackageId>Kiss.Tools</PackageId>
+    <Version>1.0.0003</Version>
+    <Authors>Kiss</Authors>
+    <Description>为自己方便整理的类库，包含常用类等，有时间再整理文档</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/k985187/Kiss.Tools</PackageProjectUrl>
+    <PackageIcon>App.png</PackageIcon>
+    <RepositoryUrl>https://github.com/k985187/Kiss.Tools</RepositoryUrl>
+    <PackageTags>Core, Tool</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="App.ico">
+    <None Include="App.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
