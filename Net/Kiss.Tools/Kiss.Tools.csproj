@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Version>1.0.0004</Version>
+  </PropertyGroup>
+
+  <Import Project="..\..\Share\Kiss.Tools\Kiss.Tools.projitems" Label="Shared" />
+
+</Project>
