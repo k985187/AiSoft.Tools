@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
 	<UseWPF>true</UseWPF>
 	<UseWindowsForms>true</UseWindowsForms>
-    <Version>1.0.0004</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
