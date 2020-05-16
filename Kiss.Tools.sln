@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30028.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiss.Tools", "Net\Kiss.Tools\Kiss.Tools.csproj", "{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiss.Tools", "NetStandard\Kiss.Tools\Kiss.Tools.csproj", "{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net", "Net", "{98DB430B-54DB-40E6-8BAF-6F822EAB21D3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{98DB430B-54DB-40E6-8BAF-6F822EAB21D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{580FD2EA-6696-41E5-A8D4-14641FAA4A9C}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Share", "Share", "{42576797
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Kiss.Tools", "Share\Kiss.Tools\Kiss.Tools.shproj", "{CB5DB8AF-248E-4C9A-B9A9-4112D9857301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kiss.Tools", "Core\Kiss.Tools\Kiss.Tools.csproj", "{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kiss.Tools", "Core\Kiss.Tools\Kiss.Tools.csproj", "{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

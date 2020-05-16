@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:rs="clr-namespace:Kiss.Tools.Resources"
+                    xmlns:cv="clr-namespace:Kiss.Tools.Converters">
+
+    <cv:TrueToVisibleConverter x:Key="{x:Static rs:Converters.TrueToVisibleConverter}"/>
+    <cv:TrueToCollapseConverter x:Key="{x:Static rs:Converters.TrueToCollapseConverter}"/>
+    <cv:DecimalToPlacesConverter x:Key="{x:Static rs:Converters.DecimalToPlacesConverter}"/>
+    <cv:RateToBrushConverter x:Key="{x:Static rs:Converters.RateToBrushConverter}"/>
+
+</ResourceDictionary>

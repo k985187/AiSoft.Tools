@@ -9,6 +9,16 @@
     <Import_RootNamespace>Kiss.Tools</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Api\WinApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObsExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\FlashWindow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\SoundPlay.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Log4Net.config" />
   </ItemGroup>
 </Project>
