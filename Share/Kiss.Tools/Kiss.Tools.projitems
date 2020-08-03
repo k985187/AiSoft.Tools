@@ -14,6 +14,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FlashWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SoundPlay.cs" />

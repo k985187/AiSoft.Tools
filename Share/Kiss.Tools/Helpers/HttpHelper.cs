@@ -37,10 +37,6 @@ namespace Kiss.Tools.Helpers
         /// <returns>返回HttpResult类型</returns>
         public HttpResult GetHtml(HttpItem item)
         {
-            if (item.URL.StartsWith("https"))
-            {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            }
             //返回参数
             HttpResult result = new HttpResult();
             try
