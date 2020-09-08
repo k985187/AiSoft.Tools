@@ -3,14 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>NETStandard 2.0</Copyright>
-	<Version>1.0.0.11</Version>
+	  <Version>1.0.0.12</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <Import Project="..\..\Share\Kiss.Tools\Kiss.Tools.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="log4net" Version="2.0.9" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.7.0" />
+    <PackageReference Include="System.Management" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

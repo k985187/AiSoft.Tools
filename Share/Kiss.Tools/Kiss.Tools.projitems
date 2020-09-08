@@ -10,15 +10,47 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Api\WinApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\BigIntegerExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DoubleExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IPAddressExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\LongExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObsExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\RandomExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ShortExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StreamExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueTypeConvertExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Crc32.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Crc64.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\Encrypt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\HashEncode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\RSA.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\RSACrypt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\RsaKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\RsaKeyType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Security\RsaPem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Strings\ChineseString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Strings\NumberFormater.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FlashWindow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Snowflake.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SoundPlay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\CpuInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\CPU_INFO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\DiskData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\MemoryInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\NetData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\RamInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\SystemInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\SystemTimeInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hardware\Unit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Windows\Windows.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Log4Net.config" />
