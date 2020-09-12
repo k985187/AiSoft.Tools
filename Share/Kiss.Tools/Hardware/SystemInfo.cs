@@ -696,6 +696,39 @@ namespace Kiss.Tools.Hardware
             return pc.NextValue();
         }
 
+        /// <summary>
+        /// 获取计算机名
+        /// </summary>
+        /// <returns></returns>
+        public static string GetComputerName()
+        {
+            try
+            {
+                return Environment.GetEnvironmentVariable("ComputerName");
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// 获取当前系统登录用户名
+        /// </summary>
+        /// <returns></returns>
+        public static string GetUserName()
+        {
+            try
+            {
+                var uName = QueryComputerSystem("UserName").Split('\\')[1];
+                return uName;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         #region Win32API声明 
 
         [DllImport("kernel32")]

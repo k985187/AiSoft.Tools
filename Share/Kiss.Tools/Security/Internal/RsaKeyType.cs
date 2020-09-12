@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Kiss.Tools.Security
+namespace Kiss.Tools.Security.Internal
 {
     public enum RsaKeyType
     {
         XML,
-        PKCS1,
-        PKCS8
+        JSON
     }
 }
