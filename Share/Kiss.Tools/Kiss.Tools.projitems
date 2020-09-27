@@ -25,6 +25,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Net\MultiThreadDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Net\PartialDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptionx\OutofMaxlengthException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Extensions\EncryptExtensions.cs" />
