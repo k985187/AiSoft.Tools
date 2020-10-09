@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>NETStandard 2.0</Copyright>
-	  <Version>1.0.0.15</Version>
+	  <Version>1.0.0.16</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 

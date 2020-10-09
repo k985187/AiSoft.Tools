@@ -148,17 +148,17 @@ namespace Kiss.Tools.Extensions
             switch (s.Length)
             {
                 case var _ when s.Length >= 11:
-                    return Regex.Replace(s, @"(\w{3})\w*(\w{4})", $"$1{masks}$2");
+                    return Regex.Replace(s, "(.{3}).*(.{4})", $"$1{masks}$2");
                 case var _ when s.Length == 10:
-                    return Regex.Replace(s, @"(\w{3})\w*(\w{3})", $"$1{masks}$2");
+                    return Regex.Replace(s, "(.{3}).*(.{3})", $"$1{masks}$2");
                 case var _ when s.Length == 9:
-                    return Regex.Replace(s, @"(\w{2})\w*(\w{3})", $"$1{masks}$2");
+                    return Regex.Replace(s, "(.{2}).*(.{3})", $"$1{masks}$2");
                 case var _ when s.Length == 8:
-                    return Regex.Replace(s, @"(\w{2})\w*(\w{2})", $"$1{masks}$2");
+                    return Regex.Replace(s, "(.{2}).*(.{2})", $"$1{masks}$2");
                 case var _ when s.Length == 7:
-                    return Regex.Replace(s, @"(\w{1})\w*(\w{2})", $"$1{masks}$2");
+                    return Regex.Replace(s, "(.{1}).*(.{2})", $"$1{masks}$2");
                 case var _ when s.Length >= 2 && s.Length < 7:
-                    return Regex.Replace(s, @"(\w{1})\w*(\w{1})", $"$1{masks}$2");
+                    return Regex.Replace(s, "(.{1}).*(.{1})", $"$1{masks}$2");
                 default:
                     return s + masks;
             }
