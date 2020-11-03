@@ -12,12 +12,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Api\WinApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\ChineseCalendar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\DateInfoStruct.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\DateTimeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\DateUtil.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\TimeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\WeekHolidayStruct.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\BigIntegerExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DoubleExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IPAddressExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\LongExtension.cs" />

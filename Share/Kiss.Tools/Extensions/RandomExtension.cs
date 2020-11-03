@@ -9,11 +9,23 @@ namespace Kiss.Tools.Extensions
         /// 生成真正的随机数
         /// </summary>
         /// <param name="r"></param>
-        /// <param name="seed"></param>
+        /// <param name="maxValue"></param>
         /// <returns></returns>
-        public static int StrictNext(this Random r, int seed = int.MaxValue)
+        public static int StrictNext(this Random r, int maxValue = int.MaxValue)
         {
-            return new Random((int)Stopwatch.GetTimestamp()).Next(seed);
+            return new Random((int)Stopwatch.GetTimestamp()).Next(maxValue);
+        }
+
+        /// <summary>
+        /// 生成真正的随机数
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        public static int StrictNext(this Random r, int minValue = 0, int maxValue = int.MaxValue)
+        {
+            return new Random((int)Stopwatch.GetTimestamp()).Next(minValue, maxValue);
         }
 
         /// <summary>

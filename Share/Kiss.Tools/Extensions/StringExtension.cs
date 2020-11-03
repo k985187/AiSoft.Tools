@@ -157,10 +157,10 @@ namespace Kiss.Tools.Extensions
                     return Regex.Replace(s, "(.{2}).*(.{2})", $"$1{masks}$2");
                 case var _ when s.Length == 7:
                     return Regex.Replace(s, "(.{1}).*(.{2})", $"$1{masks}$2");
-                case var _ when s.Length >= 2 && s.Length < 7:
+                case var _ when s.Length == 6:
                     return Regex.Replace(s, "(.{1}).*(.{1})", $"$1{masks}$2");
                 default:
-                    return s + masks;
+                    return Regex.Replace(s, "(.{1}).*", $"$1{masks}");
             }
         }
 

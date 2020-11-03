@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Kiss.Tools.Utils;
 
 namespace Kiss.Tools.Net
 {
@@ -177,7 +178,7 @@ namespace Kiss.Tools.Net
                 return;
             }
 
-            OrderByRemaining(PartialDownloaderList);
+            PartialDownloaderList.Sort((x, y) => y.RemainingBytes - x.RemainingBytes);
             var rem = PartialDownloaderList[0].RemainingBytes;
             if (rem < 50 * 1024)
             {
@@ -240,7 +241,7 @@ namespace Kiss.Tools.Net
 
             for (var i = 0; i < NumberOfParts; i++)
             {
-                var temp = CreateNewPd(i, NumberOfParts, Size);
+                var temp = CreateNew(i, NumberOfParts, Size);
                 temp.DownloadPartProgressChanged += Temp_DownloadPartProgressChanged;
                 temp.DownloadPartCompleted += Temp_DownloadPartCompleted;
                 PartialDownloaderList.Add(temp);
@@ -250,22 +251,22 @@ namespace Kiss.Tools.Net
 
         private void MergeParts()
         {
-            var mergeOrderedList = SortPDsByFrom(PartialDownloaderList);
+            var mergeOrderedList = PartialDownloaderList.OrderBy(x => x.From);
             var dir = new FileInfo(FilePath).DirectoryName;
             Directory.CreateDirectory(dir);
-            var fs = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite);
-            long totalBytesWritten = 0;
+            var fs = File.OpenWrite(FilePath);
+            var totalBytesWrite = 0L;
             var mergeProgress = 0;
             foreach (var item in mergeOrderedList)
             {
-                var pds = new FileStream(item.FullPath, FileMode.Open, FileAccess.Read);
+                var pdi = File.OpenRead(item.FullPath);
                 var buffer = new byte[4096];
                 int read;
-                while ((read = pds.Read(buffer, 0, buffer.Length)) > 0)
+                while ((read = pdi.Read(buffer, 0, buffer.Length)) > 0)
                 {
                     fs.Write(buffer, 0, read);
-                    totalBytesWritten += read;
-                    var temp = (int)(totalBytesWritten * 1d / Size * 100);
+                    totalBytesWrite += read;
+                    var temp = (int)(totalBytesWrite * 1d / Size * 100);
                     if (temp != mergeProgress && FileMergeProgressChanged != null)
                     {
                         mergeProgress = temp;
@@ -283,14 +284,14 @@ namespace Kiss.Tools.Net
             }
         }
 
-        private PartialDownloader CreateNewPd(int order, int parts, long contentLength)
+        private PartialDownloader CreateNew(int order, int parts, long contentLength)
         {
             var division = (int)contentLength / parts;
             var remaining = (int)contentLength % parts;
             var start = division * order;
             var end = start + division - 1;
-            end += (order == parts - 1) ? remaining : 0;
-            return new PartialDownloader(_url, TempFileDirectory, Guid.NewGuid().ToString(), start, end, true);
+            end += order == parts - 1 ? remaining : 0;
+            return new PartialDownloader(_url, TempFileDirectory, Snowflake.NewID().ToString(), start, end, true);
         }
 
         /// <summary>
@@ -311,48 +312,6 @@ namespace Kiss.Tools.Net
                     item.ResumeAfterWait();
                 }
             }
-        }
-
-        /// <summary>
-        /// 冒泡排序
-        /// </summary>
-        /// <param name="list"></param>
-        private static void BubbleSort(List<PartialDownloader> list)
-        {
-            var switched = true;
-            while (switched)
-            {
-                switched = false;
-                for (var i = 0; i < list.Count - 1; i++)
-                {
-                    if (list[i].RemainingBytes < list[i + 1].RemainingBytes)
-                    {
-                        var temp = list[i];
-                        list[i] = list[i + 1];
-                        list[i + 1] = temp;
-                        switched = true;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 按From属性对下载排序以合并
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        public static List<PartialDownloader> SortPDsByFrom(List<PartialDownloader> list)
-        {
-            return list.OrderBy(x => x.From).ToList();
-        }
-
-        /// <summary>
-        /// 按剩余时间排序
-        /// </summary>
-        /// <param name="list"></param>
-        public static void OrderByRemaining(List<PartialDownloader> list)
-        {
-            BubbleSort(list);
         }
 
         /// <summary>
