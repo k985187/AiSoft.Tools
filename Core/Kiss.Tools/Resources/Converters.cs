@@ -6,10 +6,8 @@ namespace Kiss.Tools.Resources
     {
         public const string TrueToVisibleConverter = nameof(TrueToVisibleConverter);
 
-        public const string TrueToCollapseConverter = nameof(TrueToCollapseConverter);
+        public const string TrueToHiddenConverter = nameof(TrueToHiddenConverter);
 
-        public const string DecimalToPlacesConverter = nameof(DecimalToPlacesConverter);
-
-        public const string RateToBrushConverter = nameof(RateToBrushConverter);
+        public const string TrueToCollapsedConverter = nameof(TrueToCollapsedConverter);
     }
 }

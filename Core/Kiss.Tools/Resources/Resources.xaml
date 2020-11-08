@@ -4,8 +4,7 @@
                     xmlns:cv="clr-namespace:Kiss.Tools.Converters">
 
     <cv:TrueToVisibleConverter x:Key="{x:Static rs:Converters.TrueToVisibleConverter}"/>
-    <cv:TrueToCollapseConverter x:Key="{x:Static rs:Converters.TrueToCollapseConverter}"/>
-    <cv:DecimalToPlacesConverter x:Key="{x:Static rs:Converters.DecimalToPlacesConverter}"/>
-    <cv:RateToBrushConverter x:Key="{x:Static rs:Converters.RateToBrushConverter}"/>
+    <cv:TrueToHiddenConverter x:Key="{x:Static rs:Converters.TrueToHiddenConverter}"/>
+    <cv:TrueToCollapsedConverter x:Key="{x:Static rs:Converters.TrueToCollapsedConverter}"/>
 
 </ResourceDictionary>
