@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Json\DateTimeConverterUsingDateTimeParse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Media\ImageUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Media\ImageWatermarker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Media\ThumbnailCutMode.cs" />

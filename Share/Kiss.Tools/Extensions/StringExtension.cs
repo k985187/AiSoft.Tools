@@ -13,6 +13,8 @@ namespace Kiss.Tools.Extensions
 {
     public static partial class StringExtension
     {
+        public static string Join(this IEnumerable<string> strs, string separate = ", ") => string.Join(separate, strs);
+
         /// <summary>
         /// 字符串转时间
         /// </summary>
@@ -145,19 +147,22 @@ namespace Kiss.Tools.Extensions
             }
             s = s.Trim();
             var masks = mask.ToString().PadLeft(4, mask);
-            switch (s.Length)
+            var sLen = s.Length;
+            if (sLen >= 11)
             {
-                case var _ when s.Length >= 11:
-                    return Regex.Replace(s, "(.{3}).*(.{4})", $"$1{masks}$2");
-                case var _ when s.Length == 10:
+                return Regex.Replace(s, "(.{3}).*(.{4})", $"$1{masks}$2");
+            }
+            switch (sLen)
+            {
+                case 10:
                     return Regex.Replace(s, "(.{3}).*(.{3})", $"$1{masks}$2");
-                case var _ when s.Length == 9:
+                case 9:
                     return Regex.Replace(s, "(.{2}).*(.{3})", $"$1{masks}$2");
-                case var _ when s.Length == 8:
+                case 8:
                     return Regex.Replace(s, "(.{2}).*(.{2})", $"$1{masks}$2");
-                case var _ when s.Length == 7:
+                case 7:
                     return Regex.Replace(s, "(.{1}).*(.{2})", $"$1{masks}$2");
-                case var _ when s.Length == 6:
+                case 6:
                     return Regex.Replace(s, "(.{1}).*(.{1})", $"$1{masks}$2");
                 default:
                     return Regex.Replace(s, "(.{1}).*", $"$1{masks}");
@@ -205,7 +210,9 @@ namespace Kiss.Tools.Extensions
         /// <returns></returns>
         public static string MaskEmail(this string s, char mask = '*')
         {
-            return !MatchEmail(s).IsMatch ? s : s.Replace(s.Substring(0, s.LastIndexOf("@")), Mask(s.Substring(0, s.LastIndexOf("@")), mask));
+            var index = s.LastIndexOf("@");
+            var oldValue = s.Substring(0, index);
+            return !MatchEmail(s).IsMatch ? s : s.Replace(oldValue, Mask(oldValue, mask));
         }
 
         #endregion Email
@@ -440,7 +447,7 @@ namespace Kiss.Tools.Extensions
         /// <returns></returns>
         public static byte[] ToByteArray(this string @this)
         {
-            return Activator.CreateInstance<ASCIIEncoding>().GetBytes(@this);
+            return Encoding.ASCII.GetBytes(@this);
         }
     }
 }

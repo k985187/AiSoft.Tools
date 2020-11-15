@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Security.Cryptography;
+#if NET45
+    using Newtonsoft.Json;
+#else
+    using System.Text.Json;
+#endif
 using System.Xml;
 using Kiss.Tools.Security.Internal;
 using Kiss.Tools.Security.Shared;
-using Newtonsoft.Json;
 
 namespace Kiss.Tools.Security.Extensions.Internal
 {
@@ -12,7 +16,7 @@ namespace Kiss.Tools.Security.Extensions.Internal
     /// </summary>
     internal static class RSAKeyExtensions
     {
-        #region JSON
+#region JSON
 
         /// <summary>
         /// RSA导入key
@@ -25,7 +29,11 @@ namespace Kiss.Tools.Security.Extensions.Internal
             var parameters = new RSAParameters();
             try
             {
+#if NET45
                 var paramsJson = JsonConvert.DeserializeObject<RSAParametersJson>(jsonString);
+#else
+                var paramsJson = JsonSerializer.Deserialize<RSAParametersJson>(jsonString);
+#endif
                 parameters.Modulus = paramsJson.Modulus != null ? Convert.FromBase64String(paramsJson.Modulus) : null;
                 parameters.Exponent = paramsJson.Exponent != null ? Convert.FromBase64String(paramsJson.Exponent) : null;
                 parameters.P = paramsJson.P != null ? Convert.FromBase64String(paramsJson.P) : null;
@@ -62,7 +70,11 @@ namespace Kiss.Tools.Security.Extensions.Internal
                 InverseQ = parameters.InverseQ != null ? Convert.ToBase64String(parameters.InverseQ) : null,
                 D = parameters.D != null ? Convert.ToBase64String(parameters.D) : null
             };
+#if NET45
             return JsonConvert.SerializeObject(parasJson);
+#else
+            return JsonSerializer.Serialize(parasJson);
+#endif
         }
 
         #endregion
@@ -123,6 +135,6 @@ namespace Kiss.Tools.Security.Extensions.Internal
                   parameters.D != null ? Convert.ToBase64String(parameters.D) : null);
         }
 
-        #endregion
+#endregion
     }
 }
