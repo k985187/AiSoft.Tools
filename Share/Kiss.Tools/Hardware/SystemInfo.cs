@@ -264,7 +264,7 @@ namespace Kiss.Tools.Hardware
         /// 获取CPU温度
         /// </summary>
         /// <returns>CPU温度</returns>
-        public static double GetCPUTemperature()
+        public static float GetCPUTemperature()
         {
             try
             {
@@ -276,8 +276,8 @@ namespace Kiss.Tools.Hardware
                     str += mo.Properties["CurrentTemperature"].Value.ToString();
                 }
                 //这就是CPU的温度了
-                var temp = (double.Parse(str) - 2732) / 10;
-                return Math.Round(temp, 2);
+                var temp = (float.Parse(str) - 2732) / 10;
+                return (float)Math.Round(temp, 2);
             }
             catch (Exception)
             {
@@ -323,7 +323,7 @@ namespace Kiss.Tools.Hardware
         /// 获取虚拟内存使用率
         /// </summary>
         /// <returns></returns>
-        public static double GetUsageVirtualMemory()
+        public static float GetUsageVirtualMemory()
         {
             return GetCounterValue(MemoryCounter, "Memory", "% Committed Bytes In Use", null);
         }
@@ -332,7 +332,7 @@ namespace Kiss.Tools.Hardware
         /// 获取虚拟内存已用大小
         /// </summary>
         /// <returns></returns>
-        public static double GetUsedVirtualMemory()
+        public static float GetUsedVirtualMemory()
         {
             return GetCounterValue(MemoryCounter, "Memory", "Committed Bytes", null);
         }
@@ -341,7 +341,7 @@ namespace Kiss.Tools.Hardware
         /// 获取虚拟内存总大小
         /// </summary>
         /// <returns></returns>
-        public static double GetTotalVirtualMemory()
+        public static float GetTotalVirtualMemory()
         {
             return GetCounterValue(MemoryCounter, "Memory", "Commit Limit", null);
         }
@@ -357,7 +357,7 @@ namespace Kiss.Tools.Hardware
         public static string GetMemoryPData()
         {
             var s = QueryComputerSystem("totalphysicalmemory");
-            var totalphysicalmemory = Convert.ToDouble(s);
+            var totalphysicalmemory = Convert.ToSingle(s);
 
             var d = GetCounterValue(MemoryCounter, "Memory", "Available Bytes", null);
             d = totalphysicalmemory - d;
@@ -372,17 +372,17 @@ namespace Kiss.Tools.Hardware
         /// 获取物理内存总数，单位B
         /// </summary>
         /// <returns></returns>
-        public static double GetTotalPhysicalMemory()
+        public static float GetTotalPhysicalMemory()
         {
             var s = QueryComputerSystem("totalphysicalmemory");
-            return s.ToDouble();
+            return s.TryConvertTo<float>();
         }
 
         /// <summary>
         /// 获取空闲的物理内存数，单位B
         /// </summary>
         /// <returns></returns>
-        public static double GetFreePhysicalMemory()
+        public static float GetFreePhysicalMemory()
         {
             return GetCounterValue(MemoryCounter, "Memory", "Available Bytes", null);
         }
@@ -391,7 +391,7 @@ namespace Kiss.Tools.Hardware
         /// 获取已经使用了的物理内存数，单位B
         /// </summary>
         /// <returns></returns>
-        public static double GetUsedPhysicalMemory()
+        public static float GetUsedPhysicalMemory()
         {
             return GetTotalPhysicalMemory() - GetFreePhysicalMemory();
         }
@@ -405,7 +405,7 @@ namespace Kiss.Tools.Hardware
         /// </summary>
         /// <param name="dd">读或写</param>
         /// <returns></returns>
-        public static double GetDiskData(DiskData dd) => dd == DiskData.Read ? GetCounterValue(DiskReadCounter, "PhysicalDisk", "Disk Read Bytes/sec", "_Total") : dd == DiskData.Write ? GetCounterValue(DiskWriteCounter, "PhysicalDisk", "Disk Write Bytes/sec", "_Total") : dd == DiskData.ReadAndWrite ? GetCounterValue(DiskReadCounter, "PhysicalDisk", "Disk Read Bytes/sec", "_Total") + GetCounterValue(DiskWriteCounter, "PhysicalDisk", "Disk Write Bytes/sec", "_Total") : 0;
+        public static float GetDiskData(DiskData dd) => dd == DiskData.Read ? GetCounterValue(DiskReadCounter, "PhysicalDisk", "Disk Read Bytes/sec", "_Total") : dd == DiskData.Write ? GetCounterValue(DiskWriteCounter, "PhysicalDisk", "Disk Write Bytes/sec", "_Total") : dd == DiskData.ReadAndWrite ? GetCounterValue(DiskReadCounter, "PhysicalDisk", "Disk Read Bytes/sec", "_Total") + GetCounterValue(DiskWriteCounter, "PhysicalDisk", "Disk Write Bytes/sec", "_Total") : 0;
 
         #endregion
 
@@ -416,13 +416,13 @@ namespace Kiss.Tools.Hardware
         /// </summary>
         /// <param name="nd">上传或下载</param>
         /// <returns></returns>
-        public static double GetNetData(NetData nd)
+        public static float GetNetData(NetData nd)
         {
             if (InstanceNames.Length == 0)
             {
                 return 0;
             }
-            double d = 0;
+            float d = 0;
             for (var i = 0; i < InstanceNames.Length; i++)
             {
                 var receied = GetCounterValue(NetRecvCounters[i], "Network Interface", "Bytes Received/sec", InstanceNames[i]);
@@ -584,7 +584,7 @@ namespace Kiss.Tools.Hardware
                 {
                     if (null != mo["DeviceID"] && null != mo["FreeSpace"])
                     {
-                        dic.Add(mo["DeviceID"].ToString(), FormatBytes(double.Parse(mo["FreeSpace"].ToString())));
+                        dic.Add(mo["DeviceID"].ToString(), FormatBytes(float.Parse(mo["FreeSpace"].ToString())));
                     }
                 }
                 return dic;
@@ -612,7 +612,7 @@ namespace Kiss.Tools.Hardware
                 {
                     if (null != mo["DeviceID"] && null != mo["Size"])
                     {
-                        dic.Add(mo["DeviceID"].ToString(), FormatBytes(double.Parse(mo["Size"].ToString())));
+                        dic.Add(mo["DeviceID"].ToString(), FormatBytes(float.Parse(mo["Size"].ToString())));
                     }
                 }
                 return dic;
@@ -638,7 +638,7 @@ namespace Kiss.Tools.Hardware
                     if (null != mo["DeviceID"] && null != mo["Size"])
                     {
                         var free = mo["FreeSpace"];
-                        dic.Add(mo["DeviceID"].ToString(), FormatBytes(double.Parse(mo["Size"].ToString()) - free.ToString().ToDouble()));
+                        dic.Add(mo["DeviceID"].ToString(), FormatBytes(float.Parse(mo["Size"].ToString()) - free.ToString().ToDouble()));
                     }
                 }
                 return dic;
@@ -656,11 +656,11 @@ namespace Kiss.Tools.Hardware
         /// 获取磁盘使用率
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<string, double> DiskUsage()
+        public static Dictionary<string, float> DiskUsage()
         {
             try
             {
-                var dic = new Dictionary<string, double>();
+                var dic = new Dictionary<string, float>();
                 var mos = new ManagementObjectSearcher("SELECT * FROM Win32_LogicalDisk");
                 foreach (var mo in mos.Get())
                 {
@@ -669,9 +669,9 @@ namespace Kiss.Tools.Hardware
                     {
                         var free = mo["FreeSpace"];
                         var total = mo["Size"];
-                        if (null != total && total.ToString().ToDouble() > 0)
+                        if (null != total && total.ToString().TryConvertTo<float>() > 0)
                         {
-                            dic.Add(device.ToString(), 1 - free.ToString().ToDouble() / total.ToString().ToDouble());
+                            dic.Add(device.ToString(), 1 - free.ToString().TryConvertTo<float>() / total.ToString().TryConvertTo<float>());
                         }
                     }
                 }
@@ -679,7 +679,7 @@ namespace Kiss.Tools.Hardware
             }
             catch (Exception)
             {
-                return new Dictionary<string, double>()
+                return new Dictionary<string, float>()
                 {
                     { "未能获取到当前计算机的磁盘信息，可能是当前程序无管理员权限，如果是web应用程序，请将应用程序池的高级设置中的进程模型下的标识设置为：LocalSystem；如果是普通桌面应用程序，请提升管理员权限后再操作。", 0 }
                 };
@@ -688,7 +688,7 @@ namespace Kiss.Tools.Hardware
 
         #endregion
 
-        private static double GetCounterValue(PerformanceCounter pc, string categoryName, string counterName, string instanceName)
+        private static float GetCounterValue(PerformanceCounter pc, string categoryName, string counterName, string instanceName)
         {
             pc.CategoryName = categoryName;
             pc.CounterName = counterName;

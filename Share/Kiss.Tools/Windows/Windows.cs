@@ -61,6 +61,7 @@ namespace Kiss.Tools.Windows
                     }
                 }
             }
+            GC.Collect();
         }
 
         /// <summary>

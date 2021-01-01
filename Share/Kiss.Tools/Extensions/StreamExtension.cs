@@ -1,4 +1,11 @@
 ﻿using System.IO;
+#if NET5_0
+    using System;
+    using System.Buffers;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+    using System.Threading.Tasks;
+#endif
 
 namespace Kiss.Tools.Extensions
 {
@@ -29,5 +36,22 @@ namespace Kiss.Tools.Extensions
             stream.Seek(0, SeekOrigin.Begin);
             return bytes;
         }
+
+#if NET5_0
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task<byte[]> ToArrayAsync(this Stream stream, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes, cancellationToken);
+            return bytes;
+        }
+
+#endif
     }
 }

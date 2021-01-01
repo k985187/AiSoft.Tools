@@ -3,11 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>NETStandard 2.0</Copyright>
-	  <Version>1.0.0.19</Version>
+	  <Version>1.0.0.21</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
-
-  <Import Project="..\..\Share\Kiss.Tools\Kiss.Tools.projitems" Label="Shared" />
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.12" />
@@ -17,5 +15,7 @@
     <PackageReference Include="System.Management" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>
+
+  <Import Project="..\..\Share\Kiss.Tools\Kiss.Tools.projitems" Label="Shared" />
 
 </Project>

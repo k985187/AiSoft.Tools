@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\WeekHolidayStruct.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\BigIntegerExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DoubleExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IConvertibleExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IPAddressExtension.cs" />

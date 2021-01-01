@@ -105,12 +105,12 @@ namespace Kiss.Tools.Media
                 resultG.DrawImage(initImage, new Rectangle(0, 0, side, side), new Rectangle(0, 0, initWidth, initHeight), GraphicsUnit.Pixel);
 
                 //关键质量控制
-                //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
+                //获取系统编码类型数组,包含了jpeg,bmpp,png,gif,tiff
                 var icis = ImageCodecInfo.GetImageEncoders();
                 ImageCodecInfo ici = null;
                 foreach (var i in icis)
                 {
-                    if ((i.MimeType == "image/jpeg") || (i.MimeType == "image/bmp") || (i.MimeType == "image/png") || (i.MimeType == "image/gif"))
+                    if ((i.MimeType == "image/jpeg") || (i.MimeType == "image/bmpp") || (i.MimeType == "image/png") || (i.MimeType == "image/gif"))
                     {
                         ici = i;
                     }
@@ -233,12 +233,12 @@ namespace Kiss.Tools.Media
                     templateG.DrawImage(pickedImage, new Rectangle(0, 0, maxWidth, maxHeight), new Rectangle(0, 0, pickedImage.Width, pickedImage.Height), GraphicsUnit.Pixel);
 
                     //关键质量控制
-                    //获取系统编码类型数组,包含了jpeg,bmp,png,gif,tiff
+                    //获取系统编码类型数组,包含了jpeg,bmpp,png,gif,tiff
                     var icis = ImageCodecInfo.GetImageEncoders();
                     ImageCodecInfo ici = null;
                     foreach (var i in icis)
                     {
-                        if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmp" || i.MimeType == "image/png" || i.MimeType == "image/gif")
+                        if (i.MimeType == "image/jpeg" || i.MimeType == "image/bmpp" || i.MimeType == "image/png" || i.MimeType == "image/gif")
                         {
                             ici = i;
                         }
@@ -360,7 +360,7 @@ namespace Kiss.Tools.Media
                 }
 
                 //生成新图
-                //新建一个bmp图片
+                //新建一个bmpp图片
                 var newImage = new Bitmap((int)newWidth, (int)newHeight);
                 //新建一个画板
                 var newG = Graphics.FromImage(newImage);
@@ -437,7 +437,7 @@ namespace Kiss.Tools.Media
         /// <returns>是否为WEB格式图片</returns>
         public static bool IsWebImage(string contentType)
         {
-            return contentType == "image/pjpeg" || contentType == "image/jpeg" || contentType == "image/gif" || contentType == "image/bmp" || contentType == "image/png";
+            return contentType == "image/pjpeg" || contentType == "image/jpeg" || contentType == "image/gif" || contentType == "image/bmpp" || contentType == "image/png";
         }
 
         #endregion
@@ -471,10 +471,10 @@ namespace Kiss.Tools.Media
 
             try
             {
-                var bmpOut = new Bitmap(rec.Width, rec.Height, PixelFormat.Format24bppRgb);
-                var g = Graphics.FromImage(bmpOut);
+                var bmppOut = new Bitmap(rec.Width, rec.Height, PixelFormat.Format24bppRgb);
+                var g = Graphics.FromImage(bmppOut);
                 g.DrawImage(b, new Rectangle(0, 0, rec.Width, rec.Height), new Rectangle(rec.X, rec.Y, rec.Width, rec.Height), GraphicsUnit.Pixel);
-                return bmpOut;
+                return bmppOut;
             }
             catch (Exception)
             {
@@ -489,11 +489,11 @@ namespace Kiss.Tools.Media
         /// <summary>  
         ///  Resize图片   
         /// </summary>  
-        /// <param name="bmp">原始Bitmap </param>  
+        /// <param name="bmpp">原始Bitmap </param>  
         /// <param name="newWidth">新的宽度</param>  
         /// <param name="newHeight">新的高度</param>  
         /// <returns>处理以后的图片</returns>  
-        public static Bitmap ResizeImage(this Bitmap bmp, int newWidth, int newHeight)
+        public static Bitmap ResizeImage(this Bitmap bmpp, int newWidth, int newHeight)
         {
             try
             {
@@ -501,7 +501,7 @@ namespace Kiss.Tools.Media
                 var g = Graphics.FromImage(b);
                 // 插值算法的质量   
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.DrawImage(bmp, new Rectangle(0, 0, newWidth, newHeight), new Rectangle(0, 0, bmp.Width, bmp.Height), GraphicsUnit.Pixel);
+                g.DrawImage(bmpp, new Rectangle(0, 0, newWidth, newHeight), new Rectangle(0, 0, bmpp.Width, bmpp.Height), GraphicsUnit.Pixel);
                 return b;
             }
             catch (Exception)
@@ -517,12 +517,12 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 裁剪并缩放
         /// </summary>
-        /// <param name="bmp">原始图片</param>
+        /// <param name="bmpp">原始图片</param>
         /// <param name="rec">裁剪的矩形区域</param>
         /// <param name="newWidth">新的宽度</param>  
         /// <param name="newHeight">新的高度</param>  
         /// <returns>处理以后的图片</returns>
-        public static Bitmap CutAndResize(this Bitmap bmp, Rectangle rec, int newWidth, int newHeight) => bmp.CutImage(rec).ResizeImage(newWidth, newHeight);
+        public static Bitmap CutAndResize(this Bitmap bmpp, Rectangle rec, int newWidth, int newHeight) => bmpp.CutImage(rec).ResizeImage(newWidth, newHeight);
 
         #endregion
 
@@ -573,8 +573,8 @@ namespace Kiss.Tools.Media
                 sH = temSize.Height;
             }
 
-            var bmp = new Bitmap(dWidth, dHeight);
-            var g = Graphics.FromImage(bmp);
+            var bmpp = new Bitmap(dWidth, dHeight);
+            var g = Graphics.FromImage(bmpp);
             g.Clear(Color.WhiteSmoke);
             g.CompositingQuality = CompositingQuality.HighQuality;
             g.SmoothingMode = SmoothingMode.HighQuality;
@@ -591,7 +591,7 @@ namespace Kiss.Tools.Media
                 var jpegIcIinfo = arrayIci.FirstOrDefault(t => t.FormatDescription.Equals("JPEG"));
                 if (jpegIcIinfo != null)
                 {
-                    bmp.Save(dFile, jpegIcIinfo, ep);//dFile是压缩后的新路径
+                    bmpp.Save(dFile, jpegIcIinfo, ep);//dFile是压缩后的新路径
                     var fi = new FileInfo(dFile);
                     if (fi.Length > 1024 * size && quality > 10)
                     {
@@ -601,7 +601,7 @@ namespace Kiss.Tools.Media
                 }
                 else
                 {
-                    bmp.Save(dFile, tFormat);
+                    bmpp.Save(dFile, tFormat);
                 }
                 return true;
             }
@@ -655,8 +655,8 @@ namespace Kiss.Tools.Media
                 sH = temSize.Height;
             }
 
-            var bmp = new Bitmap(dWidth, dHeight);
-            var g = Graphics.FromImage(bmp);
+            var bmpp = new Bitmap(dWidth, dHeight);
+            var g = Graphics.FromImage(bmpp);
             g.Clear(Color.WhiteSmoke);
             g.CompositingQuality = CompositingQuality.HighQuality;
             g.SmoothingMode = SmoothingMode.HighQuality;
@@ -673,7 +673,7 @@ namespace Kiss.Tools.Media
                 var jpegIcIinfo = arrayIci.FirstOrDefault(t => t.FormatDescription.Equals("JPEG"));
                 if (jpegIcIinfo != null)
                 {
-                    bmp.Save(dest, jpegIcIinfo, ep);//dFile是压缩后的新路径
+                    bmpp.Save(dest, jpegIcIinfo, ep);//dFile是压缩后的新路径
                     if (dest.Length > 1024 * size && quality > 10)
                     {
                         quality -= 10;
@@ -682,7 +682,7 @@ namespace Kiss.Tools.Media
                 }
                 else
                 {
-                    bmp.Save(dest, tFormat);
+                    bmpp.Save(dest, tFormat);
                 }
                 return true;
             }
@@ -741,7 +741,7 @@ namespace Kiss.Tools.Media
                     break;
             }
 
-            //新建一个bmp图片
+            //新建一个bmpp图片
             var bitmap = new Bitmap(towidth, toheight);
 
             //新建一个画板
@@ -773,27 +773,25 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 调整光暗
         /// </summary>
-        /// <param name="mybm">原始图片</param>
+        /// <param name="source">原始图片</param>
         /// <param name="width">原始图片的长度</param>
         /// <param name="height">原始图片的高度</param>
         /// <param name="val">增加或减少的光暗值</param>
-        public static Bitmap LDPic(this Bitmap mybm, int width, int height, int val)
+        public static Bitmap LDPic(this Bitmap source, int width, int height, int val)
         {
-            var bm = new Bitmap(width, height); //初始化一个记录经过处理后的图片对象
-            int x, y; //x、y是循环次数，后面三个是记录红绿蓝三个值的
-            for (x = 0; x < width; x++)
+            var bmp = new Bitmap(width, height); //初始化一个记录经过处理后的图片对象
+            for (var x = 0; x < width; x++)
             {
-                for (y = 0; y < height; y++)
+                for (var y = 0; y < height; y++)
                 {
-                    var pixel = mybm.GetPixel(x, y);
+                    var pixel = source.GetPixel(x, y);
                     var resultR = pixel.R + val; //x、y是循环次数，后面三个是记录红绿蓝三个值的
                     var resultG = pixel.G + val; //x、y是循环次数，后面三个是记录红绿蓝三个值的
                     var resultB = pixel.B + val; //x、y是循环次数，后面三个是记录红绿蓝三个值的
-                    bm.SetPixel(x, y, Color.FromArgb(resultR, resultG, resultB)); //绘图
+                    bmp.SetPixel(x, y, Color.FromArgb(resultR, resultG, resultB)); //绘图
                 }
             }
-
-            return bm;
+            return bmp;
         }
 
         #endregion
@@ -803,25 +801,24 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 反色处理
         /// </summary>
-        /// <param name="mybm">原始图片</param>
+        /// <param name="source">原始图片</param>
         /// <param name="width">原始图片的长度</param>
         /// <param name="height">原始图片的高度</param>
-        public static Bitmap RePic(this Bitmap mybm, int width, int height)
+        public static Bitmap RePic(this Bitmap source, int width, int height)
         {
-            var bm = new Bitmap(width, height); //初始化一个记录处理后的图片的对象
+            var bmp = new Bitmap(width, height); //初始化一个记录处理后的图片的对象
             for (var x = 0; x < width; x++)
             {
                 for (var y = 0; y < height; y++)
                 {
-                    var pixel = mybm.GetPixel(x, y);
+                    var pixel = source.GetPixel(x, y);
                     var resultR = 255 - pixel.R;
                     var resultG = 255 - pixel.G;
                     var resultB = 255 - pixel.B;
-                    bm.SetPixel(x, y, Color.FromArgb(resultR, resultG, resultB)); //绘图
+                    bmp.SetPixel(x, y, Color.FromArgb(resultR, resultG, resultB)); //绘图
                 }
             }
-
-            return bm;
+            return bmp;
         }
 
         #endregion
@@ -884,10 +881,10 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 拉伸图片
         /// </summary>
-        /// <param name="bmp">原始图片</param>
+        /// <param name="bmpp">原始图片</param>
         /// <param name="newW">新的宽度</param>
         /// <param name="newH">新的高度</param>
-        public static async Task<Bitmap> ResizeImageAsync(this Bitmap bmp, int newW, int newH)
+        public static async Task<Bitmap> ResizeImageAsync(this Bitmap bmpp, int newW, int newH)
         {
             try
             {
@@ -913,23 +910,21 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 滤色处理
         /// </summary>
-        /// <param name="mybm">原始图片</param>
+        /// <param name="source">原始图片</param>
         /// <param name="width">原始图片的长度</param>
         /// <param name="height">原始图片的高度</param>
-        public static Bitmap FilPic(this Bitmap mybm, int width, int height)
+        public static Bitmap FilPic(this Bitmap source, int width, int height)
         {
-            var bm = new Bitmap(width, height);
+            var bmp = new Bitmap(width, height);
             for (var x = 0; x < width; x++)
             {
-                int y;
-                for (y = 0; y < height; y++)
+                for (var y = 0; y < height; y++)
                 {
-                    var pixel = mybm.GetPixel(x, y);
-                    bm.SetPixel(x, y, Color.FromArgb(0, pixel.G, pixel.B)); //绘图
+                    var pixel = source.GetPixel(x, y);
+                    bmp.SetPixel(x, y, Color.FromArgb(0, pixel.G, pixel.B)); //绘图
                 }
             }
-
-            return bm;
+            return bmp;
         }
 
         #endregion
@@ -939,12 +934,12 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 左右翻转
         /// </summary>
-        /// <param name="mybm">原始图片</param>
+        /// <param name="source">原始图片</param>
         /// <param name="width">原始图片的长度</param>
         /// <param name="height">原始图片的高度</param>
-        public static Bitmap RevPicLR(this Bitmap mybm, int width, int height)
+        public static Bitmap RevPicLR(this Bitmap source, int width, int height)
         {
-            var bm = new Bitmap(width, height);
+            var bmp = new Bitmap(width, height);
             //x,y是循环次数,z是用来记录像素点的x坐标的变化的
             for (var y = height - 1; y >= 0; y--)
             {
@@ -952,12 +947,11 @@ namespace Kiss.Tools.Media
                 int z; //x,y是循环次数,z是用来记录像素点的x坐标的变化的
                 for (x = width - 1, z = 0; x >= 0; x--)
                 {
-                    var pixel = mybm.GetPixel(x, y);
-                    bm.SetPixel(z++, y, Color.FromArgb(pixel.R, pixel.G, pixel.B)); //绘图
+                    var pixel = source.GetPixel(x, y);
+                    bmp.SetPixel(z++, y, Color.FromArgb(pixel.R, pixel.G, pixel.B)); //绘图
                 }
             }
-
-            return bm;
+            return bmp;
         }
 
         #endregion
@@ -967,24 +961,23 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 上下翻转
         /// </summary>
-        /// <param name="mybm">原始图片</param>
+        /// <param name="source">原始图片</param>
         /// <param name="width">原始图片的长度</param>
         /// <param name="height">原始图片的高度</param>
-        public static Bitmap RevPicUD(this Bitmap mybm, int width, int height)
+        public static Bitmap RevPicUD(this Bitmap source, int width, int height)
         {
-            var bm = new Bitmap(width, height);
+            var bmp = new Bitmap(width, height);
             for (var x = 0; x < width; x++)
             {
                 int y;
                 int z;
                 for (y = height - 1, z = 0; y >= 0; y--)
                 {
-                    var pixel = mybm.GetPixel(x, y);
-                    bm.SetPixel(x, z++, Color.FromArgb(pixel.R, pixel.G, pixel.B)); //绘图
+                    var pixel = source.GetPixel(x, y);
+                    bmp.SetPixel(x, z++, Color.FromArgb(pixel.R, pixel.G, pixel.B)); //绘图
                 }
             }
-
-            return bm;
+            return bmp;
         }
 
         #endregion
@@ -1048,23 +1041,22 @@ namespace Kiss.Tools.Media
         /// <summary>
         /// 转换为黑白图片
         /// </summary>
-        /// <param name="mybm">要进行处理的图片</param>
+        /// <param name="source">要进行处理的图片</param>
         /// <param name="width">图片的长度</param>
         /// <param name="height">图片的高度</param>
-        public static Bitmap BWPic(this Bitmap mybm, int width, int height)
+        public static Bitmap BWPic(this Bitmap source, int width, int height)
         {
-            var bm = new Bitmap(width, height);
+            var bmp = new Bitmap(width, height);
             for (var x = 0; x < width; x++)
             {
                 for (var y = 0; y < height; y++)
                 {
-                    var pixel = mybm.GetPixel(x, y);
+                    var pixel = source.GetPixel(x, y);
                     var result = (pixel.R + pixel.G + pixel.B) / 3; //记录处理后的像素值
-                    bm.SetPixel(x, y, Color.FromArgb(result, result, result));
+                    bmp.SetPixel(x, y, Color.FromArgb(result, result, result));
                 }
             }
-
-            return bm;
+            return bmp;
         }
 
         #endregion
@@ -1100,12 +1092,12 @@ namespace Kiss.Tools.Media
             var strbase64 = source.Substring(source.IndexOf(',') + 1).Trim('\0');
             var arr = Convert.FromBase64String(strbase64);
             var ms = new MemoryStream(arr);
-            var bmp = new Bitmap(ms);
-            //新建第二个bitmap类型的bmp2变量。
-            var bmp2 = new Bitmap(bmp, bmp.Width, bmp.Height);
-            var draw = Graphics.FromImage(bmp2);
-            draw.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);
-            return bmp2;
+            var bmpp = new Bitmap(ms);
+            //新建第二个bitmap类型的bmpp2变量。
+            var bmpp2 = new Bitmap(bmpp, bmpp.Width, bmpp.Height);
+            var draw = Graphics.FromImage(bmpp2);
+            draw.DrawImage(bmpp, 0, 0, bmpp.Width, bmpp.Height);
+            return bmpp2;
         }
     }
 }
