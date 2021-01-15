@@ -3,7 +3,7 @@ using Kiss.Tools.Security.Shared;
 
 namespace Kiss.Tools.Security.Extensions
 {
-    internal static class EncryptExtensions
+    public static class EncryptExtensions
     {
         /// <summary>
         /// String MD5 extension

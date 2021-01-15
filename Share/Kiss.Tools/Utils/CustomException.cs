@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-#if !NETSTANDARD2_0
+#if !NETSTANDARD
     using System.Windows.Threading;
 #endif
 using Kiss.Tools.Helpers;
@@ -12,7 +12,7 @@ namespace Kiss.Tools.Utils
     /// </summary>
     public class CustomException
     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD
         /// <summary>
         /// 处理UI线程中某个异常未被捕获时出现的异常
         /// </summary>

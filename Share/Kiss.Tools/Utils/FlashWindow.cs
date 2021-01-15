@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-#if !NETSTANDARD2_0
+#if !NETSTANDARD
     using System.Windows.Forms;
     using System.Windows.Interop;
 #endif
@@ -14,7 +14,7 @@ namespace Kiss.Tools.Utils
     /// </summary>
     public class FlashWindow
     {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD
         /// <summary>
         /// 开始闪烁
         /// </summary>

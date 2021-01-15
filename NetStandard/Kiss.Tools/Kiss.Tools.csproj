@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Copyright>NETStandard 2.0</Copyright>
-	  <Version>1.0.0.21</Version>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Copyright>NETStandard 2.1</Copyright>
+	  <Version>1.0.0.22</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -13,7 +13,7 @@
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="5.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     <PackageReference Include="System.Management" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 
   <Import Project="..\..\Share\Kiss.Tools\Kiss.Tools.projitems" Label="Shared" />

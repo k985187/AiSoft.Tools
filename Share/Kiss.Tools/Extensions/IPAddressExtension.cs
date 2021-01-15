@@ -30,8 +30,7 @@ namespace Kiss.Tools.Extensions
                 case AddressFamily.InterNetwork when bytes[0] == 198 && bytes[1] == 18:
                 case AddressFamily.InterNetwork when bytes[0] == 198 && bytes[1] == 51 && bytes[2] == 100:
                 case AddressFamily.InterNetwork when bytes[0] == 203 && bytes[1] == 0 && bytes[2] == 113:
-                case AddressFamily.InterNetworkV6
-                    when ip.IsIPv6Teredo || ip.IsIPv6LinkLocal || ip.IsIPv6Multicast || ip.IsIPv6SiteLocal:
+                case AddressFamily.InterNetworkV6 when ip.IsIPv6Teredo || ip.IsIPv6LinkLocal || ip.IsIPv6Multicast || ip.IsIPv6SiteLocal:
                 case AddressFamily.InterNetworkV6 when ip.ToString().StartsWith("::"):
                 case AddressFamily.InterNetworkV6 when ip.ToString().StartsWith("64:ff9b::"):
                 case AddressFamily.InterNetworkV6 when ip.ToString().StartsWith("100::"):

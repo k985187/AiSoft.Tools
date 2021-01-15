@@ -534,6 +534,17 @@ namespace Kiss.Tools.Security
 
         #region RSA
 
+        /// <summary>
+        /// RSA From pem
+        /// </summary>
+        /// <param name="pem"></param>
+        /// <returns></returns>
+        public static RSA RSAFromPem(string pem)
+        {
+            Check.Argument.IsNotEmpty(pem, nameof(pem));
+            return RsaProvider.FromPem(pem);
+        }
+
 #if !NET45
 
         /// <summary>
@@ -559,21 +570,6 @@ namespace Kiss.Tools.Security
                 return (publicPem, privatePem);
             }
         }
-
-#endif
-
-        /// <summary>
-        /// RSA From pem
-        /// </summary>
-        /// <param name="pem"></param>
-        /// <returns></returns>
-        public static RSA RSAFromPem(string pem)
-        {
-            Check.Argument.IsNotEmpty(pem, nameof(pem));
-            return RsaProvider.FromPem(pem);
-        }
-
-#if NETCOREAPP3_0
 
         /// <summary>
         /// Export Rsa PKCS1 key
@@ -683,10 +679,6 @@ namespace Kiss.Tools.Security
 
             return rsa;
         }
-
-#endif
-
-#if !NET45
 
         /// <summary>
         /// RSA Sign
@@ -1005,6 +997,46 @@ namespace Kiss.Tools.Security
             }
         }
 
+        /// <summary>
+        /// Get rsa encrypt max length 
+        /// </summary>
+        /// <param name="rsa">Rsa instance </param>
+        /// <param name="padding"><see cref="RSAEncryptionPadding"/></param>
+        /// <returns></returns>
+        private static int GetMaxRsaEncryptLength(RSA rsa, RSAEncryptionPadding padding)
+        {
+            var offset = 0;
+            if (padding.Mode == RSAEncryptionPaddingMode.Pkcs1)
+            {
+                offset = 11;
+            }
+            else
+            {
+                if (padding.Equals(RSAEncryptionPadding.OaepSHA1))
+                {
+                    offset = 42;
+                }
+
+                if (padding.Equals(RSAEncryptionPadding.OaepSHA256))
+                {
+                    offset = 66;
+                }
+
+                if (padding.Equals(RSAEncryptionPadding.OaepSHA384))
+                {
+                    offset = 98;
+                }
+
+                if (padding.Equals(RSAEncryptionPadding.OaepSHA512))
+                {
+                    offset = 130;
+                }
+            }
+            var keySize = rsa.KeySize;
+            var maxLength = keySize / 8 - offset;
+            return maxLength;
+        }
+
 #endif
 
         /// <summary>
@@ -1087,50 +1119,6 @@ namespace Kiss.Tools.Security
             }
             return rsaKey;
         }
-
-#if !NET45
-
-        /// <summary>
-        /// Get rsa encrypt max length 
-        /// </summary>
-        /// <param name="rsa">Rsa instance </param>
-        /// <param name="padding"><see cref="RSAEncryptionPadding"/></param>
-        /// <returns></returns>
-        private static int GetMaxRsaEncryptLength(RSA rsa, RSAEncryptionPadding padding)
-        {
-            var offset = 0;
-            if (padding.Mode == RSAEncryptionPaddingMode.Pkcs1)
-            {
-                offset = 11;
-            }
-            else
-            {
-                if (padding.Equals(RSAEncryptionPadding.OaepSHA1))
-                {
-                    offset = 42;
-                }
-
-                if (padding.Equals(RSAEncryptionPadding.OaepSHA256))
-                {
-                    offset = 66;
-                }
-
-                if (padding.Equals(RSAEncryptionPadding.OaepSHA384))
-                {
-                    offset = 98;
-                }
-
-                if (padding.Equals(RSAEncryptionPadding.OaepSHA512))
-                {
-                    offset = 130;
-                }
-            }
-            var keySize = rsa.KeySize;
-            var maxLength = keySize / 8 - offset;
-            return maxLength;
-        }
-
-#endif
 
         #endregion
 

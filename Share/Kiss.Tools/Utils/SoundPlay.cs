@@ -1,5 +1,5 @@
 ﻿using System;
-#if !NETSTANDARD2_0
+#if !NETSTANDARD
     using System.Media;
 #endif
 using System.Reflection;
@@ -12,7 +12,7 @@ namespace Kiss.Tools.Utils
     /// </summary>
     public class SoundPlay
     {
-#if  !NETSTANDARD2_0
+#if  !NETSTANDARD
         /// <summary>
         /// 播放
         /// </summary>

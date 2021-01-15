@@ -64,18 +64,17 @@ namespace Kiss.Tools.Strings
         public string ToString(long number)
         {
             var result = new List<string>();
-            if (number < 0)
-            {
-                number = -number;
-                result.Add("0");
-            }
-            var t = number;
+            var t = Math.Abs(number);
             while (t != 0)
             {
                 var mod = t % Length;
                 t = Math.Abs(t / Length);
                 var character = Characters[Convert.ToInt32(mod)].ToString();
                 result.Insert(0, character);
+            }
+            if (number < 0)
+            {
+                result.Insert(0, "-");
             }
             return string.Join("", result);
         }

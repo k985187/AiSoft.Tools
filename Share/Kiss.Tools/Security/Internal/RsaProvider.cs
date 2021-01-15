@@ -9,7 +9,6 @@ namespace Kiss.Tools.Security.Internal
 {
     /// <summary>
     /// RSA provider
-    /// https://github.com/xiangyuecn/RSA-csharp
     /// </summary>
     internal class RsaProvider
     {
