@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Kiss.Tools.Extensions
 {
-    public static class IConvertibleExtensions
+    public static class IConvertibleExtension
     {
         /// <summary>
         /// 类型直转

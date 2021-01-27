@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Kiss.Tools.Extensions
 {
-    public static class IDictionaryExtensions
+    public static class IDictionaryExtension
     {
         /// <summary>
         /// 添加或更新键值对

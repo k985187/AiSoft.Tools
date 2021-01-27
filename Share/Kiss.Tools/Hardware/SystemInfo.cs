@@ -234,6 +234,31 @@ namespace Kiss.Tools.Hardware
             }
         }
 
+        /// <summary>
+        /// 获取CPU序列号
+        /// </summary>
+        /// <returns></returns>
+        public static string GetCpuID()
+        {
+            try
+            {
+                var mc = new ManagementClass("Win32_Processor");
+                var moc = mc.GetInstances();
+                string strCpuID = null;
+                foreach (var mo in moc)
+                {
+                    strCpuID = mo.Properties["ProcessorId"].Value.ToString();
+                    mo.Dispose();
+                    break;
+                }
+                return strCpuID;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         #endregion
 
         #region 获取内存信息
