@@ -29,13 +29,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueTypeConvertExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\JsonExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Json\DateTimeConverterUsingDateTimeParse.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Media\ImageUtilities.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Media\ImageWatermarker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Media\ThumbnailCutMode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Media\WatermarkPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\MultiThreadDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\PartialDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptProvider.cs" />
@@ -60,16 +56,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\FlashWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Snowflake.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SoundPlay.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\CpuInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\CPU_INFO.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\DiskData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\MemoryInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\NetData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\RamInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\SystemInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\SystemTimeInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Hardware\Unit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Windows\Windows.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Log4Net.config" />

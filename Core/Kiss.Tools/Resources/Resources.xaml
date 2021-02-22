@@ -6,5 +6,6 @@
     <cv:TrueToVisibleConverter x:Key="{x:Static rs:Converters.TrueToVisibleConverter}"/>
     <cv:TrueToHiddenConverter x:Key="{x:Static rs:Converters.TrueToHiddenConverter}"/>
     <cv:TrueToCollapsedConverter x:Key="{x:Static rs:Converters.TrueToCollapsedConverter}"/>
+    <cv:InverseBooleanConverter x:Key="{x:Static rs:Converters.InverseBooleanConverter}"/>
 
 </ResourceDictionary>

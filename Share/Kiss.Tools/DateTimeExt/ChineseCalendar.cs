@@ -22,8 +22,6 @@ namespace Kiss.Tools.DateTimeExt
 
         private readonly DateTime _datetime;
 
-        #region 基础数据
-
         private const int MinYear = 1900;
         private const int MaxYear = 2100;
         private static readonly DateTime MinDay = new DateTime(1900, 1, 30);
@@ -99,8 +97,6 @@ namespace Kiss.Tools.DateTimeExt
             "井木犴", "鬼金羊", "柳土獐", "星日马", "张月鹿", "翼火蛇", "轸水蚓"
         };
 
-        #region 节气数据
-
         /// <summary>
         /// 节气数据
         /// </summary>
@@ -118,10 +114,6 @@ namespace Kiss.Tools.DateTimeExt
             263343, 285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758
         };
 
-        #endregion
-
-        #region 农历相关数据
-
         private const string TianGan = "甲乙丙丁戊己庚辛壬癸";
         private const string DiZhi = "子丑寅卯辰巳午未申酉戌亥";
         private const string AnimalStr = "鼠牛虎兔龙蛇马羊猴鸡狗猪";
@@ -132,10 +124,6 @@ namespace Kiss.Tools.DateTimeExt
         {
             "出错", "正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"
         };
-
-        #endregion
-
-        #region 节日数据
 
         /// <summary>
         /// 自定义的工作日
@@ -231,10 +219,6 @@ namespace Kiss.Tools.DateTimeExt
             new WeekHolidayStruct(10, 1, 4, "国际减轻自然灾害日"),
             new WeekHolidayStruct(11, 4, 5, "感恩节")
         };
-
-        #endregion
-
-        #endregion
 
         /// <summary>
         /// 用一个标准的公历日期来初使化
@@ -375,8 +359,6 @@ namespace Kiss.Tools.DateTimeExt
 
             Date = MinDay.AddDays(offset);
         }
-
-        #region 私有函数
 
         /// <summary>
         /// 传回农历 y年m月的总天数
@@ -617,10 +599,6 @@ namespace Kiss.Tools.DateTimeExt
             return result;
         }
 
-        #endregion
-
-        #region 节日
-
         /// <summary>
         /// 计算中国农历节日
         /// </summary>
@@ -778,10 +756,6 @@ namespace Kiss.Tools.DateTimeExt
             return Date.DayOfWeek == DayOfWeek.Saturday || Date.DayOfWeek == DayOfWeek.Sunday;
         }
 
-        #endregion
-
-        #region 公历日期
-
         /// <summary>
         /// 取对应的公历日期
         /// </summary>
@@ -847,10 +821,6 @@ namespace Kiss.Tools.DateTimeExt
         /// 时辰
         /// </summary>
         public string ChineseHour => GetChineseHour(_datetime);
-
-        #endregion
-
-        #region 农历日期
 
         /// <summary>
         /// 农历今天
@@ -1029,10 +999,6 @@ namespace Kiss.Tools.DateTimeExt
             }
         }
 
-        #endregion
-
-        #region 星座
-
         /// <summary>
         /// 计算指定日期的星座序号 
         /// </summary>
@@ -1102,10 +1068,6 @@ namespace Kiss.Tools.DateTimeExt
             }
         }
 
-        #endregion
-
-        #region 生肖
-
         /// <summary>
         /// 计算属相的索引，注意虽然属相是以农历年来区别的，但是目前在实际使用中是按公历来计算的
         /// 鼠年为1,其它类推
@@ -1130,10 +1092,6 @@ namespace Kiss.Tools.DateTimeExt
                 return AnimalStr[offset % 12].ToString();
             }
         }
-
-        #endregion
-
-        #region 天干地支
 
         /// <summary>
         /// 取农历年的干支表示法如 乙丑年
@@ -1230,8 +1188,6 @@ namespace Kiss.Tools.DateTimeExt
         /// 取当前日期的干支表示法如 甲子年乙丑月丙庚日
         /// </summary>
         public string GanZhiDateString => GanZhiYearString + GanZhiMonthString + GanZhiDayString;
-
-        #endregion
 
         /// <summary>
         /// 取下一天

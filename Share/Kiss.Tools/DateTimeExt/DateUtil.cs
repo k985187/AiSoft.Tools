@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
+using Kiss.Tools.Api;
 
 namespace Kiss.Tools.DateTimeExt
 {
@@ -82,31 +82,13 @@ namespace Kiss.Tools.DateTimeExt
             dtWeekeEnd = dt.AddDays((int)DayOfWeek.Saturday - (int)dt.DayOfWeek + 1).AddDays(-2);
         }
 
-        #region P/Invoke 设置本地时间
-
-        [DllImport("Kernel32.dll")]
-        private static extern bool SetLocalTime(ref SystemTime time);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct SystemTime
-        {
-            public short year;
-            public short month;
-            public short dayOfWeek;
-            public short day;
-            public short hour;
-            public short minute;
-            public short second;
-            public short milliseconds;
-        }
-
         /// <summary>
         /// 设置本地计算机时间
         /// </summary>
         /// <param name="dt">DateTime对象</param>
         public static void SetLocalTime(this in DateTime dt)
         {
-            SystemTime st;
+            WinApi.SystemTime st;
             st.year = (short)dt.Year;
             st.month = (short)dt.Month;
             st.dayOfWeek = (short)dt.DayOfWeek;
@@ -115,10 +97,8 @@ namespace Kiss.Tools.DateTimeExt
             st.minute = (short)dt.Minute;
             st.second = (short)dt.Second;
             st.milliseconds = (short)dt.Millisecond;
-            SetLocalTime(ref st);
+            WinApi.SetLocalTime(ref st);
         }
-
-        #endregion
 
         /// <summary>
         /// 返回相对于当前时间的相对天数
@@ -135,7 +115,7 @@ namespace Kiss.Tools.DateTimeExt
         /// </summary>
         public static string GetDateTimeF(this in DateTime dt) => dt.ToString("yyyy-MM-dd HH:mm:ss:fffffff");
 
-#if !NET45
+#if !NETFRAMEWORK
 
         /// <summary>
         /// 获取该时间相对于1970-01-01 00:00:00的秒数

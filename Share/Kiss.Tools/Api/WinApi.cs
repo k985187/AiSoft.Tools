@@ -53,5 +53,24 @@ namespace Kiss.Tools.Api
 
         [DllImport("User32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("Kernel32.dll")]
+        public static extern bool SetLocalTime(ref SystemTime time);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SystemTime
+        {
+            public short year;
+            public short month;
+            public short dayOfWeek;
+            public short day;
+            public short hour;
+            public short minute;
+            public short second;
+            public short milliseconds;
+        }
+
+        [DllImport("User32.dll")]
+        public static extern bool ShowWindowAsync(IntPtr hWnd, WindowShowStyle cmdShow);
     }
 }

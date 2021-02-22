@@ -22,16 +22,10 @@ namespace Kiss.Tools.Net
     /// </summary>
     public class MultiThreadDownloader
     {
-        #region 属性
-
         private string _url;
         private bool _rangeAllowed;
         private readonly HttpWebRequest _request;
         private Action<HttpWebRequest> _requestConfigure = req => req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36";
-
-        #endregion
-
-        #region 公共属性
 
         /// <summary>
         /// RangeAllowed
@@ -104,10 +98,6 @@ namespace Kiss.Tools.Net
         /// </summary>
         public string FilePath { get; set; }
 
-        #endregion
-
-        #region 变量
-
         /// <summary>
         /// 总下载进度更新事件
         /// </summary>
@@ -119,10 +109,6 @@ namespace Kiss.Tools.Net
         public event FileMergeProgressChangedEventHandler FileMergeProgressChanged;
 
         private readonly AsyncOperation _aop;
-
-        #endregion
-
-        #region 下载管理器
 
         /// <summary>
         /// 多线程下载管理器
@@ -162,10 +148,6 @@ namespace Kiss.Tools.Net
         public MultiThreadDownloader(string sourceUrl, int numOfParts) : this(sourceUrl, null, numOfParts)
         {
         }
-
-        #endregion
-
-        #region 事件
 
         private void Temp_DownloadPartCompleted(object sender, EventArgs e)
         {
@@ -220,10 +202,6 @@ namespace Kiss.Tools.Net
                 }
             }
         }
-
-        #endregion
-
-        #region 方法
 
         private void CreateFirstPartitions()
         {
@@ -346,10 +324,6 @@ namespace Kiss.Tools.Net
             return ctl;
         }
 
-        #endregion
-
-        #region 公共方法
-
         /// <summary>
         /// 暂停下载
         /// </summary>
@@ -398,7 +372,5 @@ namespace Kiss.Tools.Net
                 }
             }
         }
-
-        #endregion
     }
 }

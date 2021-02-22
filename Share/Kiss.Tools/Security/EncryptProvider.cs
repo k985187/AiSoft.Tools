@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-#if !NET45
+#if NETCOREAPP
     using Kiss.Tools.Security.Exceptionx;
 #endif
 using Kiss.Tools.Security.Extensions.Internal;
@@ -13,8 +13,6 @@ namespace Kiss.Tools.Security
 {
     public class EncryptProvider
     {
-        #region Common
-
         /// <summary>
         /// Generate a random key
         /// </summary>
@@ -32,14 +30,9 @@ namespace Kiss.Tools.Security
             return num.ToString();
         }
 
-        #endregion
-
-        #region AES
-
         /*
         AES:16位密钥=128位，24位密钥=192位，32位密钥=256位,IV均为16位
         */
-
         /// <summary>
         /// Create ase key
         /// </summary>
@@ -294,10 +287,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region DES
-
         /// <summary>
         /// Create des key
         /// </summary>
@@ -530,10 +519,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region RSA
-
         /// <summary>
         /// RSA From pem
         /// </summary>
@@ -545,7 +530,7 @@ namespace Kiss.Tools.Security
             return RsaProvider.FromPem(pem);
         }
 
-#if !NET45
+#if NETCOREAPP
 
         /// <summary>
         /// RSA Converter to pem
@@ -583,7 +568,7 @@ namespace Kiss.Tools.Security
                 throw new ArgumentException($" Key size min value is 2048!");
             }
 
-            using (RSA rsa = RSA.Create())
+            using (var rsa = RSA.Create())
             {
                 rsa.KeySize = keySize;
                 var publicKey = Convert.ToBase64String(rsa.ExportRSAPublicKey());
@@ -1120,10 +1105,6 @@ namespace Kiss.Tools.Security
             return rsaKey;
         }
 
-        #endregion
-
-        #region MD5
-
         /// <summary>
         /// MD5 hash
         /// </summary>
@@ -1147,10 +1128,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region HMACMD5
-
         /// <summary>
         /// HMACMD5 hash
         /// </summary>
@@ -1173,10 +1150,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region SHA1
-
         /// <summary>
         /// SHA1加密
         /// </summary>
@@ -1196,10 +1169,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region SHA256
-
         /// <summary>
         /// SHA256 encrypt
         /// </summary>
@@ -1218,10 +1187,6 @@ namespace Kiss.Tools.Security
                 return str_sha256_out;
             }
         }
-
-        #endregion
-
-        #region SHA384
 
         /// <summary>
         /// SHA384 encrypt
@@ -1243,10 +1208,6 @@ namespace Kiss.Tools.Security
 
         }
 
-        #endregion
-
-        #region SHA512
-
         /// <summary>
         /// SHA512 encrypt
         /// </summary>
@@ -1265,10 +1226,6 @@ namespace Kiss.Tools.Security
                 return str_sha512_out;
             }
         }
-
-        #endregion
-
-        #region HMACSHA1
 
         /// <summary>
         /// HMAC_SHA1
@@ -1296,10 +1253,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region HMACSHA256
-
         /// <summary>
         /// HMAC_SHA256 
         /// </summary>
@@ -1325,10 +1278,6 @@ namespace Kiss.Tools.Security
                 return str_hamc_out;
             }
         }
-
-        #endregion
-
-        #region HMACSHA384
 
         /// <summary>
         /// HMAC_SHA384
@@ -1356,10 +1305,6 @@ namespace Kiss.Tools.Security
             }
         }
 
-        #endregion
-
-        #region HMACSHA512
-
         /// <summary>
         /// HMAC_SHA512
         /// </summary>
@@ -1385,10 +1330,6 @@ namespace Kiss.Tools.Security
                 return str_hamc_out;
             }
         }
-
-        #endregion
-
-        #region Machine Key
 
         /// <summary>
         /// Create decryptionKey
@@ -1440,12 +1381,6 @@ namespace Kiss.Tools.Security
             return machineKey.ToString();
         }
 
-        #endregion
-
-        #region Base64
-
-        #region Base64加密解密
-
         /// <summary>
         /// Base64 encrypt
         /// </summary>
@@ -1489,9 +1424,5 @@ namespace Kiss.Tools.Security
             Check.Argument.IsNotEmpty(input, nameof(input));
             return encoding.GetString(Convert.FromBase64String(input));
         }
-
-        #endregion
-
-        #endregion
     }
 }

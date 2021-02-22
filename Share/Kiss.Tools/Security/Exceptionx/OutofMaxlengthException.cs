@@ -1,5 +1,5 @@
 ﻿using System;
-#if !NET45
+#if !NETFRAMEWORK
     using System.Security.Cryptography;
 #endif
 
@@ -26,7 +26,7 @@ namespace Kiss.Tools.Security.Exceptionx
         /// </summary>
         public int KeySize { get; private set; }
 
-#if !NET45
+#if !NETFRAMEWORK
 
         /// <summary>
         /// Rsa padding
@@ -48,7 +48,8 @@ namespace Kiss.Tools.Security.Exceptionx
         /// Ctor
         /// </summary>
         /// <param name="maxLength"></param>
-        public OutofMaxlengthException(string message, int maxLength, int keySize, RSAEncryptionPadding rsaEncryptionPadding) : this(maxLength, keySize, rsaEncryptionPadding)
+        public OutofMaxlengthException(string message, int maxLength, int keySize, RSAEncryptionPadding rsaEncryptionPadding) 
+            : this(maxLength, keySize, rsaEncryptionPadding)
         {
             ErrorMessage = message;
         }

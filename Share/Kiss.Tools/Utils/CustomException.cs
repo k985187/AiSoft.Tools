@@ -13,6 +13,7 @@ namespace Kiss.Tools.Utils
     public class CustomException
     {
 #if !NETSTANDARD
+
         /// <summary>
         /// 处理UI线程中某个异常未被捕获时出现的异常
         /// </summary>
@@ -23,6 +24,7 @@ namespace Kiss.Tools.Utils
             LogHelper.WriteLog(e.Exception);
             e.Handled = true;
         }
+
 #endif
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
+using Kiss.Tools.Api;
 
 namespace Kiss.Tools.Helpers
 {
@@ -30,34 +30,8 @@ namespace Kiss.Tools.Helpers
         /// <param name="instance">运行实例</param>
         public static void HandleRunningInstance(Process instance)
         {
-            ShowWindowAsync(instance.MainWindowHandle, IsIconic(instance.MainWindowHandle) ? WindowShowStyle.Restore : WindowShowStyle.Show);
-            SetForegroundWindow(instance.MainWindowHandle);
+            WinApi.ShowWindowAsync(instance.MainWindowHandle, WinApi.IsIconic(instance.MainWindowHandle) ? WinApi.WindowShowStyle.Restore : WinApi.WindowShowStyle.Show);
+            WinApi.SetForegroundWindow(instance.MainWindowHandle);
         }
-
-        private enum WindowShowStyle : int
-        {
-            Hide = 0,
-            ShowNormal = 1,
-            ShowMinimized = 2,
-            ShowMaximized = 3,
-            Maximize = 3,
-            ShowNormalNoActivate = 4,
-            Show = 5,
-            Minimize = 6,
-            ShowMinNoActivate = 7,
-            ShowNoActivate = 8,
-            Restore = 9,
-            ShowDefault = 10,
-            ForceMinimized = 11
-        }
-
-        [DllImport("User32.dll")]
-        private static extern bool IsIconic(IntPtr hWnd);
-
-        [DllImport("User32.dll")]
-        private static extern bool ShowWindowAsync(IntPtr hWnd, WindowShowStyle cmdShow);
-
-        [DllImport("User32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 }

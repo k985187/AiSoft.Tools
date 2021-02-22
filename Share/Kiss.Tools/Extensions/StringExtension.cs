@@ -11,7 +11,7 @@ using Kiss.Tools.Strings;
 
 namespace Kiss.Tools.Extensions
 {
-    public static partial class StringExtension
+    public static class StringExtension
     {
         public static string Join(this IEnumerable<string> strs, string separate = ", ") => string.Join(separate, strs);
 
@@ -169,8 +169,6 @@ namespace Kiss.Tools.Extensions
             }
         }
 
-        #region Email
-
         public class EmailMatchModel
         {
             public bool IsMatch { get; set; }
@@ -215,10 +213,6 @@ namespace Kiss.Tools.Extensions
             return !MatchEmail(s).IsMatch ? s : s.Replace(oldValue, Mask(oldValue, mask));
         }
 
-        #endregion Email
-
-        #region 匹配完整的URL
-
         /// <summary>
         /// 匹配完整格式的URL
         /// </summary>
@@ -250,10 +244,6 @@ namespace Kiss.Tools.Extensions
             MatchUrl(s, out var isMatch);
             return isMatch;
         }
-
-        #endregion 匹配完整的URL
-
-        #region 权威校验身份证号码
 
         /// <summary>
         /// 根据GB11643-1999标准权威校验中国身份证号码的合法性
@@ -304,10 +294,6 @@ namespace Kiss.Tools.Extensions
             }
             return false;
         }
-
-        #endregion 权威校验身份证号码
-
-        #region IP地址
 
         /// <summary>
         /// 校验IP地址的正确性，同时支持IPv4和IPv6
@@ -378,10 +364,6 @@ namespace Kiss.Tools.Extensions
             return current >= begin.IPToID() && current <= ends.IPToID();
         }
 
-        #endregion IP地址
-
-        #region 校验手机号码的正确性
-
         /// <summary>
         /// 匹配手机号码
         /// </summary>
@@ -411,10 +393,6 @@ namespace Kiss.Tools.Extensions
             return success;
         }
 
-        #endregion 校验手机号码的正确性
-
-        #region Url
-
         /// <summary>
         /// 判断url是否是外部地址
         /// </summary>
@@ -438,8 +416,6 @@ namespace Kiss.Tools.Extensions
             return false;
         }
 
-        #endregion Url
-
         /// <summary>
         /// 转换成字节数组
         /// </summary>
@@ -449,8 +425,6 @@ namespace Kiss.Tools.Extensions
         {
             return Encoding.ASCII.GetBytes(@this);
         }
-
-        #region 权威校验中国专利申请号/专利号
 
         /// <summary>
         /// 中国专利申请号（授权以后就是专利号）由两种组成
@@ -552,7 +526,5 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
             }
             return isPatnumTrue;
         }
-
-        #endregion
     }
 }

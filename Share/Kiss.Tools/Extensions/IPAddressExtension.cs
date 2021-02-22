@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace Kiss.Tools.Extensions
 {
@@ -47,5 +48,30 @@ namespace Kiss.Tools.Extensions
                     return false;
             }
         }
+
+        /// <summary>
+        /// 获取域名的DNS IP
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public static string GetDnsIpAddress(this string ip)
+        {
+            try
+            {
+                var ipAddresses = Dns.GetHostAddressesAsync(ip).Result;
+                return ipAddresses.Length > 0 ? ipAddresses[0].ToString() : ip;
+            }
+            catch
+            {
+                return ip;
+            }
+        }
+
+        /// <summary>
+        /// 获取域名的DNS IP
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public static async Task<string> GetDnsIpAddressAsync(this string ip) => await Task.Run(ip.GetDnsIpAddress);
     }
 }

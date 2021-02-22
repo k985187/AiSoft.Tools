@@ -9,5 +9,7 @@ namespace Kiss.Tools.Resources
         public const string TrueToHiddenConverter = nameof(TrueToHiddenConverter);
 
         public const string TrueToCollapsedConverter = nameof(TrueToCollapsedConverter);
+
+        public const string InverseBooleanConverter = nameof(InverseBooleanConverter);
     }
 }

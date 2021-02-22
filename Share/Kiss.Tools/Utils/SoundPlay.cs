@@ -13,6 +13,7 @@ namespace Kiss.Tools.Utils
     public class SoundPlay
     {
 #if  !NETSTANDARD
+
         /// <summary>
         /// 播放
         /// </summary>
@@ -26,6 +27,7 @@ namespace Kiss.Tools.Utils
                 soundPlayer.Play();
             });
         }
+
 #endif
     }
 }

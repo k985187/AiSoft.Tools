@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
-#if !NETSTANDARD
-    using System.Windows.Forms;
+#if NETCOREAPP
     using System.Windows.Interop;
+#endif
+#if NETFRAMEWORK
+    using System.Windows.Forms;
 #endif
 using Kiss.Tools.Api;
 
@@ -15,6 +17,8 @@ namespace Kiss.Tools.Utils
     public class FlashWindow
     {
 #if !NETSTANDARD
+#if NETCOREAPP
+
         /// <summary>
         /// 开始闪烁
         /// </summary>
@@ -23,6 +27,21 @@ namespace Kiss.Tools.Utils
         {
             var handle = new WindowInteropHelper(window).Handle;
             if (window.WindowState == WindowState.Minimized || handle != WinApi.GetForegroundWindow())
+
+#endif
+
+#if NETFRAMEWORK
+
+        /// <summary>
+        /// 开始闪烁
+        /// </summary>
+        /// <param name="winForm"></param>
+        public static void Start(Form winForm)
+        {
+            var handle = winForm.Handle;
+            if (winForm.WindowState == FormWindowState.Minimized || handle != WinApi.GetForegroundWindow())
+#endif
+
             {
                 var fInfo = new WinApi.FLASHWINFO();
                 fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
@@ -34,24 +53,6 @@ namespace Kiss.Tools.Utils
             }
         }
 
-        /// <summary>
-        /// 开始闪烁
-        /// </summary>
-        /// <param name="winForm"></param>
-        public static void Start(Form winForm)
-        {
-            var handle = winForm.Handle;
-            if (winForm.WindowState == FormWindowState.Minimized || handle != WinApi.GetForegroundWindow())
-            {
-                var fInfo = new WinApi.FLASHWINFO();
-                fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
-                fInfo.hwnd = handle;
-                fInfo.dwFlags = WinApi.FLASHW_TRAY | WinApi.FLASHW_TIMERNOFG;
-                fInfo.uCount = UInt32.MaxValue;
-                fInfo.dwTimeout = 0;
-                WinApi.FlashWindowEx(ref fInfo);
-            }
-        }
 #endif
     }
 }
