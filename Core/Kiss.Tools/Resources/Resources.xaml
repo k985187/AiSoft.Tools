@@ -6,6 +6,9 @@
     <cv:TrueToVisibleConverter x:Key="{x:Static rs:Converters.TrueToVisibleConverter}"/>
     <cv:TrueToHiddenConverter x:Key="{x:Static rs:Converters.TrueToHiddenConverter}"/>
     <cv:TrueToCollapsedConverter x:Key="{x:Static rs:Converters.TrueToCollapsedConverter}"/>
+    <cv:EnumToDescriptionConverter x:Key="{x:Static rs:Converters.EnumToDescriptionConverter}"/>
     <cv:InverseBooleanConverter x:Key="{x:Static rs:Converters.InverseBooleanConverter}"/>
+    <cv:PrecisionConverter x:Key="{x:Static rs:Converters.PrecisionConverter}"/>
+    <cv:PrecisionNumberConverter x:Key="{x:Static rs:Converters.PrecisionNumberConverter}"/>
 
 </ResourceDictionary>

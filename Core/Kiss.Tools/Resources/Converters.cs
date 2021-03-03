@@ -10,6 +10,12 @@ namespace Kiss.Tools.Resources
 
         public const string TrueToCollapsedConverter = nameof(TrueToCollapsedConverter);
 
+        public const string EnumToDescriptionConverter = nameof(EnumToDescriptionConverter);
+
         public const string InverseBooleanConverter = nameof(InverseBooleanConverter);
+
+        public const string PrecisionConverter = nameof(PrecisionConverter);
+
+        public const string PrecisionNumberConverter = nameof(PrecisionNumberConverter);
     }
 }
