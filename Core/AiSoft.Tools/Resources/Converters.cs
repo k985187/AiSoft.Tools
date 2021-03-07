@@ -17,5 +17,7 @@ namespace AiSoft.Tools.Resources
         public const string PrecisionConverter = nameof(PrecisionConverter);
 
         public const string PrecisionNumberConverter = nameof(PrecisionNumberConverter);
+
+        public const string StringToMaskConverter = nameof(StringToMaskConverter);
     }
 }

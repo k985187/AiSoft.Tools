@@ -5,8 +5,14 @@ namespace AiSoft.Tools.Helpers
 {
     public static class EncryptHelper
     {
+        /// <summary>
+        /// 加密Key(32位)
+        /// </summary>
         public static string AesKey { get; set; } = "LaxNUhu2sF2mGfVHlj3Emb0yQrOmbmuo";
 
+        /// <summary>
+        /// 加密IV(16位)
+        /// </summary>
         public static string AesIv { get; set; } = "FbNWxb25Ze6qEGbD";
 
         /// <summary>

@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Api\DesktopApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\Native.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Api\WinApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringEncryptConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\ChineseCalendar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\DateInfoStruct.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\DateUtil.cs" />

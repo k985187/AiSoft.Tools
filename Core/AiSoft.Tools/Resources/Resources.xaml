@@ -10,5 +10,6 @@
     <atc:InverseBooleanConverter x:Key="{x:Static atr:Converters.InverseBooleanConverter}"/>
     <atc:PrecisionConverter x:Key="{x:Static atr:Converters.PrecisionConverter}"/>
     <atc:PrecisionNumberConverter x:Key="{x:Static atr:Converters.PrecisionNumberConverter}"/>
+    <atc:StringToMaskConverter x:Key="{x:Static atr:Converters.StringToMaskConverter}"/>
 
 </ResourceDictionary>

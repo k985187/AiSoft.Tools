@@ -5,7 +5,7 @@
     <TargetFrameworks>net45;netcoreapp3.1</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <Version>1.0.0.27</Version>
+    <Version>1.0.0.28</Version>
     <Copyright>Net 4.5; Core 3.1</Copyright>
     <Company>AiSoft</Company>
     <SignAssembly>true</SignAssembly>
