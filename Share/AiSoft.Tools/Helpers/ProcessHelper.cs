@@ -28,8 +28,10 @@ namespace AiSoft.Tools.Helpers
         /// 操作运行实例句柄
         /// </summary>
         /// <param name="instance">运行实例</param>
-        public static void HandleRunningInstance(Process instance)
+        /// <param name="msg">进程通信消息(0x8001-0xBFFF)</param>
+        public static void HandleRunningInstance(Process instance, uint msg)
         {
+            WinApi.PostThreadMessage(instance.Threads[0].Id, msg, IntPtr.Zero, IntPtr.Zero);
             WinApi.ShowWindowAsync(instance.MainWindowHandle, WinApi.IsIconic(instance.MainWindowHandle) ? WinApi.WindowShowStyle.Restore : WinApi.WindowShowStyle.Show);
             WinApi.SetForegroundWindow(instance.MainWindowHandle);
         }

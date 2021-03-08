@@ -72,5 +72,9 @@ namespace AiSoft.Tools.Api
 
         [DllImport("User32.dll")]
         public static extern bool ShowWindowAsync(IntPtr hWnd, WindowShowStyle cmdShow);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("User32.dll", SetLastError = true)]
+        public static extern bool PostThreadMessage(int threadId, uint msg, IntPtr wParam, IntPtr lParam);
     }
 }
