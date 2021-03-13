@@ -1,8 +1,6 @@
-﻿using System.IO;
-#if NET
-    using System;
-    using System.Buffers;
-    using System.Runtime.InteropServices;
+﻿using System;
+using System.IO;
+#if (NETCOREAPP || NET)
     using System.Threading;
     using System.Threading.Tasks;
 #endif
@@ -37,7 +35,7 @@ namespace AiSoft.Tools.Extensions
             return bytes;
         }
 
-#if NET
+#if (NETCOREAPP || NET)
 
         /// <summary>
         /// 

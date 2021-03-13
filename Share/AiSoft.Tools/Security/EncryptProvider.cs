@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-#if NETCOREAPP
+#if (NETCOREAPP || NET)
     using AiSoft.Tools.Security.Exceptionx;
 #endif
 using AiSoft.Tools.Security.Extensions.Internal;
@@ -530,7 +530,7 @@ namespace AiSoft.Tools.Security
             return RsaProvider.FromPem(pem);
         }
 
-#if NETCOREAPP
+#if (NETCOREAPP || NET)
 
         /// <summary>
         /// RSA Converter to pem

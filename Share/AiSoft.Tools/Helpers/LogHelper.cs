@@ -20,7 +20,7 @@ namespace AiSoft.Tools.Helpers
         /// </summary>
         static LogHelper()
         {
-            _loggerRepository = LogManager.CreateRepository("Kiss.Tools");
+            _loggerRepository = LogManager.CreateRepository("AiSoft.Tools");
             var fileName = Assembly.GetExecutingAssembly().GetName().Name + ".Log4Net.config";
             var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName);
             log4net.Config.XmlConfigurator.Configure(_loggerRepository, stream);
