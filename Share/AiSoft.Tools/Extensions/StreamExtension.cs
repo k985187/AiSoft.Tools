@@ -1,5 +1,5 @@
 ﻿using System.IO;
-#if NET5_0
+#if NET
     using System;
     using System.Buffers;
     using System.Runtime.InteropServices;
@@ -37,7 +37,7 @@ namespace AiSoft.Tools.Extensions
             return bytes;
         }
 
-#if NET5_0
+#if NET
 
         /// <summary>
         /// 

@@ -30,6 +30,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StreamExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueTypeConvertExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Files\FileExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Files\ISevenZipCompressor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Files\SevenZipCompressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EncryptHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EnumHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
@@ -59,9 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Strings\NumberFormater.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\FlashWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Snowflake.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\SoundPlay.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Log4Net.config" />

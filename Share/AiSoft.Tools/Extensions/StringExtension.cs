@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using AiSoft.Tools.Helpers;
 using AiSoft.Tools.Strings;
 
 namespace AiSoft.Tools.Extensions
@@ -526,5 +528,64 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
             }
             return isPatnumTrue;
         }
+
+        #region 网页抓取
+
+        /// <summary>
+        /// 同步获取网页内容
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string HttpGetString(this string url)
+        {
+            var httpHelper = new HttpHelper();
+            var httpItem = new HttpItem
+            {
+                URL = url
+            };
+            var html = "";
+            try
+            {
+                var result = httpHelper.GetHtml(httpItem);
+                html = result.StatusCode == HttpStatusCode.OK ? result.Html : result.StatusDescription;
+            }
+            catch (Exception e)
+            {
+                html = e.Message;
+            }
+            return html;
+        }
+
+        /// <summary>
+        /// 同步获取网页内容转为Json
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static T HttpGetJson<T>(this string url)
+        {
+            return url.HttpGetString().JsonDeserialize<T>();
+        }
+
+        /// <summary>
+        /// 异步获取网页内容
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static async Task<string> HttpGetStringAsync(this string url)
+        {
+            return await Task.Run(url.HttpGetString);
+        }
+
+        /// <summary>
+        /// 同步获取网页内容转为Json
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static async Task<T> HttpGetJsonAsync<T>(this string url)
+        {
+            return (await url.HttpGetStringAsync()).JsonDeserialize<T>();
+        }
+
+        #endregion
     }
 }

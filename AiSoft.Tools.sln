@@ -3,22 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30028.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AiSoft.Tools", "NetStandard\AiSoft.Tools\AiSoft.Tools.csproj", "{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{98DB430B-54DB-40E6-8BAF-6F822EAB21D3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{580FD2EA-6696-41E5-A8D4-14641FAA4A9C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Share", "Share", "{42576797-B3CB-4D08-8A84-C5F89120D167}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AiSoft.Tools", "Share\AiSoft.Tools\AiSoft.Tools.shproj", "{CB5DB8AF-248E-4C9A-B9A9-4112D9857301}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AiSoft.Tools", "Core\AiSoft.Tools\AiSoft.Tools.csproj", "{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AiSoft.Tools", "Core\AiSoft.Tools\AiSoft.Tools.csproj", "{11BC40D5-C5D0-4AEC-9ADD-84F462F1BEAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{95A86C2C-FBB5-436C-94AC-938CF6B0CB3C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Share\AiSoft.Tools\AiSoft.Tools.projitems*{0618ec80-3e8a-4a8e-831e-cc2ab6c48e67}*SharedItemsImports = 5
-		Share\AiSoft.Tools\AiSoft.Tools.projitems*{bce89d0a-43d9-495b-8ecb-03f4b3d1863f}*SharedItemsImports = 5
+		Share\AiSoft.Tools\AiSoft.Tools.projitems*{11bc40d5-c5d0-4aec-9add-84f462f1beaa}*SharedItemsImports = 5
 		Share\AiSoft.Tools\AiSoft.Tools.projitems*{cb5db8af-248e-4c9a-b9a9-4112d9857301}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,22 +21,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11BC40D5-C5D0-4AEC-9ADD-84F462F1BEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11BC40D5-C5D0-4AEC-9ADD-84F462F1BEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11BC40D5-C5D0-4AEC-9ADD-84F462F1BEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11BC40D5-C5D0-4AEC-9ADD-84F462F1BEAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BCE89D0A-43D9-495B-8ECB-03F4B3D1863F} = {98DB430B-54DB-40E6-8BAF-6F822EAB21D3}
 		{CB5DB8AF-248E-4C9A-B9A9-4112D9857301} = {42576797-B3CB-4D08-8A84-C5F89120D167}
-		{0618EC80-3E8A-4A8E-831E-CC2AB6C48E67} = {580FD2EA-6696-41E5-A8D4-14641FAA4A9C}
+		{11BC40D5-C5D0-4AEC-9ADD-84F462F1BEAA} = {95A86C2C-FBB5-436C-94AC-938CF6B0CB3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AAE3E200-5149-43EA-B434-D724EC4DA7B8}

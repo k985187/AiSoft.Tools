@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-#if !NETSTANDARD
-    using System.Windows.Threading;
-#endif
 using AiSoft.Tools.Helpers;
 
 namespace AiSoft.Tools.Utils
@@ -12,21 +9,6 @@ namespace AiSoft.Tools.Utils
     /// </summary>
     public class CustomException
     {
-#if !NETSTANDARD
-
-        /// <summary>
-        /// 处理UI线程中某个异常未被捕获时出现的异常
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public static void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            LogHelper.WriteLog(e.Exception);
-            e.Handled = true;
-        }
-
-#endif
-
         /// <summary>
         /// 处理非UI线程中某个异常未被捕获时出的异常
         /// </summary>
