@@ -33,6 +33,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Files\FileExt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Files\ISevenZipCompressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Files\SevenZipCompressor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConsoleHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EncryptHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EnumHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileHelper.cs" />
@@ -41,9 +42,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\JsonExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\JsonConfigHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\OSHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\MultiThreadDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\PartialDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NotifyBase\PropertyBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptionx\OutofMaxlengthException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Extensions\EncryptExtensions.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Strings\NumberFormater.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\RandomPort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Snowflake.cs" />
   </ItemGroup>
   <ItemGroup>
