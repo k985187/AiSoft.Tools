@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Files\SevenZipCompressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EncryptHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\EnumHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\FileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\HttpHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\GZipHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\JsonExtension.cs" />

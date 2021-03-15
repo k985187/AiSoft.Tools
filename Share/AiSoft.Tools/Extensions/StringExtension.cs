@@ -194,13 +194,54 @@ namespace AiSoft.Tools.Extensions
             var isMatch = match.Success;
             if (isMatch && valid)
             {
-                //DnsClient
                 //var nslookup = new LookupClient();
-                //var query = nslookup.Query(s.Split('@')[1], QueryType.MX).Answers.MxRecords().SelectMany(r => Dns.GetHostAddresses(r.Exchange.Value)).ToList();
-                //isMatch = query.Any(ip => !ip.IsPrivateIP());
+                //var task = nslookup.Query(s.Split('@')[1], QueryType.MX).Answers.MxRecords().SelectAsync(r => Dns.GetHostAddressesAsync(r.Exchange.Value).ContinueWith(t =>
+                //{
+                //    if (t.IsCanceled || t.IsFaulted)
+                //    {
+                //        return new[] { IPAddress.Loopback };
+                //    }
+                //    return t.Result;
+                //}));
+                //isMatch = task.Result.SelectMany(a => a).Any(ip => !ip.IsPrivateIP());
             }
             return new EmailMatchModel{IsMatch = isMatch, Match=match};
         }
+
+#if !NETFRAMEWORK
+
+        /// <summary>
+        /// 匹配Email
+        /// </summary>
+        /// <param name="s">源字符串</param>
+        /// <param name="valid">是否验证有效性</param>
+        /// <returns>匹配对象；是否匹配成功，若返回true，则会得到一个Match对象，否则为null</returns>
+        public static async Task<(bool isMatch, Match match)> MatchEmailAsync(this string s, bool valid = false)
+        {
+            if (string.IsNullOrEmpty(s) || s.Length < 7)
+            {
+                return (false, null);
+            }
+            var match = Regex.Match(s, @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
+            var isMatch = match.Success;
+            if (isMatch && valid)
+            {
+                //var nslookup = new LookupClient();
+                //var query = await nslookup.QueryAsync(s.Split('@')[1], QueryType.MX);
+                //var result = await query.Answers.MxRecords().SelectAsync(r => Dns.GetHostAddressesAsync(r.Exchange.Value).ContinueWith(t =>
+                //{
+                //    if (t.IsCanceled || t.IsFaulted)
+                //    {
+                //        return new[] { IPAddress.Loopback };
+                //    }
+                //    return t.Result;
+                //}));
+                //isMatch = result.SelectMany(a => a).Any(ip => !ip.IsPrivateIP());
+            }
+            return (isMatch, match);
+        }
+
+#endif
 
         /// <summary>
         /// 邮箱掩码
@@ -529,7 +570,7 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
             return isPatnumTrue;
         }
 
-        #region 网页抓取
+#region 网页抓取
 
         /// <summary>
         /// 同步获取网页内容
@@ -586,6 +627,6 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
             return (await url.HttpGetStringAsync()).JsonDeserialize<T>();
         }
 
-        #endregion
+#endregion
     }
 }
