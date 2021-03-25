@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeExt\WeekHolidayStruct.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\BigIntegerExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DoubleExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\EnumExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IConvertibleExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtension.cs" />
