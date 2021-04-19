@@ -104,6 +104,11 @@ namespace AiSoft.Tools.Net
         public event EventHandler TotalProgressChanged;
 
         /// <summary>
+        /// 文件合并完成事件
+        /// </summary>
+        public event EventHandler FileMergedComplete;
+
+        /// <summary>
         /// 文件合并事件
         /// </summary>
         public event FileMergeProgressChangedEventHandler FileMergeProgressChanged;
@@ -259,6 +264,10 @@ namespace AiSoft.Tools.Net
                 {
                     // ignored
                 }
+            }
+            if (FileMergedComplete != null)
+            {
+                _aop.Post(state => FileMergedComplete(state, EventArgs.Empty), this);
             }
         }
 

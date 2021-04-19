@@ -570,7 +570,7 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
             return isPatnumTrue;
         }
 
-#region 网页抓取
+        #region 网页抓取
 
         /// <summary>
         /// 同步获取网页内容
@@ -627,6 +627,6 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
             return (await url.HttpGetStringAsync()).JsonDeserialize<T>();
         }
 
-#endregion
+        #endregion
     }
 }

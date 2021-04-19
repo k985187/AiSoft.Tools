@@ -2,13 +2,14 @@
 using System.Diagnostics;
 using System.Globalization;
 using AiSoft.Tools.Api;
+using AiSoft.Tools.Helpers;
 
 namespace AiSoft.Tools.DateTimeExt
 {
     /// <summary>
     /// 日期操作工具类
     /// </summary>
-    public static class DateUtil
+    public static class DateTimeHelper
     {
         /// <summary>
         /// 获取某一年有多少周
@@ -83,7 +84,7 @@ namespace AiSoft.Tools.DateTimeExt
         }
 
         /// <summary>
-        /// 设置本地计算机时间
+        /// 设置本地计算机系统时间，仅支持Windows系统
         /// </summary>
         /// <param name="dt">DateTime对象</param>
         public static void SetLocalTime(this in DateTime dt)
@@ -118,51 +119,60 @@ namespace AiSoft.Tools.DateTimeExt
 #if !NETFRAMEWORK
 
         /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的秒数
+        /// 获取该时间相对于1970-01-01T00:00:00Z的秒数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
         public static double GetTotalSeconds(this in DateTime dt) => new DateTimeOffset(dt).ToUnixTimeSeconds();
 
         /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的毫秒数
+        /// 获取该时间相对于1970-01-01T00:00:00Z的毫秒数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
         public static double GetTotalMilliseconds(this in DateTime dt) => new DateTimeOffset(dt).ToUnixTimeMilliseconds();
 
+        /// <summary>
+        /// 获取该时间相对于1970-01-01T00:00:00Z的纳秒时间戳
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static long GetTotalNanoseconds(this in DateTime dt)
+        {
+            var ticks = (new DateTimeOffset(dt).UtcTicks - 621355968000000000) * 100;
+            if (OSHelper.IsWindows())
+            {
+                WinApi.QueryPerformanceCounter(out var timestamp);
+                return ticks + timestamp % 100;
+            }
+            return ticks + Stopwatch.GetTimestamp() % 100;
+        }
+
 #endif
 
         /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的微秒时间戳
+        /// 获取该时间相对于1970-01-01T00:00:00Z的微秒时间戳
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static long GetTotalMicroseconds(this in DateTime dt) => new DateTimeOffset(dt).Ticks / 10;
+        public static long GetTotalMicroseconds(this in DateTime dt) => (new DateTimeOffset(dt).UtcTicks - 621355968000000000) / 10;
 
         /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的纳秒时间戳
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static long GetTotalNanoseconds(this in DateTime dt) => new DateTimeOffset(dt).Ticks * 100 + Stopwatch.GetTimestamp() % 100;
-
-        /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的分钟数
+        /// 获取该时间相对于1970-01-01T00:00:00Z的分钟数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
         public static double GetTotalMinutes(this in DateTime dt) => new DateTimeOffset(dt).Offset.TotalMinutes;
 
         /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的小时数
+        /// 获取该时间相对于1970-01-01T00:00:00Z的小时数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
         public static double GetTotalHours(this in DateTime dt) => new DateTimeOffset(dt).Offset.TotalHours;
 
         /// <summary>
-        /// 获取该时间相对于1970-01-01 00:00:00的天数
+        /// 获取该时间相对于1970-01-01T00:00:00Z的天数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
@@ -185,7 +195,7 @@ namespace AiSoft.Tools.DateTimeExt
         public static int GetDaysOfYear(this in DateTime dt)
         {
             //取得传入参数的年份部分，用来判断是否是闰年
-            int n = dt.Year;
+            var n = dt.Year;
             return IsRuYear(n) ? 366 : 365;
         }
 

@@ -76,5 +76,8 @@ namespace AiSoft.Tools.Api
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("User32.dll", SetLastError = true)]
         public static extern bool PostThreadMessage(int threadId, uint msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("Kernel32.dll")]
+        public static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
     }
 }

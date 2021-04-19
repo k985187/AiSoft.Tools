@@ -1034,7 +1034,6 @@ namespace AiSoft.Tools.Security
         {
             Check.Argument.IsNotEmpty(rsaKey, nameof(rsaKey));
             var rsa = RSA.Create();
-
             rsa.FromJsonString(rsaKey);
             return rsa;
         }
