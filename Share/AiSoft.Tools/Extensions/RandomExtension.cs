@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace AiSoft.Tools.Extensions
 {
@@ -13,7 +12,7 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static int StrictNext(this Random r, int maxValue = int.MaxValue)
         {
-            return new Random((int)Stopwatch.GetTimestamp()).Next(maxValue);
+            return new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0)).Next(maxValue);
         }
 
         /// <summary>
@@ -25,7 +24,7 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static int StrictNext(this Random r, int minValue = 0, int maxValue = int.MaxValue)
         {
-            return new Random((int)Stopwatch.GetTimestamp()).Next(minValue, maxValue);
+            return new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0)).Next(minValue, maxValue);
         }
 
         /// <summary>

@@ -9,11 +9,11 @@ namespace AiSoft.Tools.Extensions
         /// 十进制转任意进制
         /// </summary>
         /// <param name="num"></param>
-        /// <param name="bin">进制</param>
+        /// <param name="newBase">进制</param>
         /// <returns></returns>
-        public static string ToBinary(this long num, int bin)
+        public static string ToBinary(this long num, byte newBase)
         {
-            var nf = new NumberFormater(bin);
+            var nf = new NumberFormater(newBase);
             return nf.ToString(num);
         }
 

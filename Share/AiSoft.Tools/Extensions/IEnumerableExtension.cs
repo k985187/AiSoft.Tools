@@ -460,5 +460,109 @@ namespace AiSoft.Tools.Extensions
             }
             return result;
         }
+
+        /// <summary>
+        /// 随机排序
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IOrderedEnumerable<T> OrderByRandom<T>(this IEnumerable<T> source)
+        {
+            return source.OrderBy(_ => Guid.NewGuid());
+        }
+
+        /// <summary>
+        /// 序列相等
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static bool SequenceEqual<T>(this IEnumerable<T> first, IEnumerable<T> second, Func<T, T, bool> condition)
+        {
+            if (first is ICollection<T> source1 && second is ICollection<T> source2)
+            {
+                if (source1.Count != source2.Count)
+                {
+                    return false;
+                }
+                if (source1 is IList<T> list1 && source2 is IList<T> list2)
+                {
+                    var count = source1.Count;
+                    for (var index = 0; index < count; ++index)
+                    {
+                        if (!condition(list1[index], list2[index]))
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            IEnumerator<T> enumerator2;
+            using (var enumerator1 = first.GetEnumerator())
+            {
+                using (enumerator2 = second.GetEnumerator())
+                {
+                    while (enumerator1.MoveNext())
+                    {
+                        if (!enumerator2.MoveNext() || !condition(enumerator1.Current, enumerator2.Current))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return !enumerator2.MoveNext();
+        }
+
+        /// <summary>
+        /// 序列相等
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public static bool SequenceEqual<T1, T2>(this IEnumerable<T1> first, IEnumerable<T2> second, Func<T1, T2, bool> condition)
+        {
+            if (first is ICollection<T1> source1 && second is ICollection<T2> source2)
+            {
+                if (source1.Count != source2.Count)
+                {
+                    return false;
+                }
+                if (source1 is IList<T1> list1 && source2 is IList<T2> list2)
+                {
+                    var count = source1.Count;
+                    for (var index = 0; index < count; ++index)
+                    {
+                        if (!condition(list1[index], list2[index]))
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            IEnumerator<T2> enumerator2;
+            using (var enumerator1 = first.GetEnumerator())
+            {
+                using (enumerator2 = second.GetEnumerator())
+                {
+                    while (enumerator1.MoveNext())
+                    {
+                        if (!enumerator2.MoveNext() || !condition(enumerator1.Current, enumerator2.Current))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return !enumerator2.MoveNext();
+        }
     }
 }

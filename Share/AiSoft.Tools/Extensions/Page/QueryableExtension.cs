@@ -15,7 +15,7 @@ namespace AiSoft.Tools.Extensions
         ///// <param name="page">当前页</param>
         ///// <param name="size">页大小</param>
         ///// <returns></returns>
-        //public static async Task<PagedList<T>> ToPagedListAsync<T>(this IOrderedQueryable<T> query, int page, int size)
+        //public static async Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> query, int page, int size)
         //{
         //    var totalCount = await query.CountAsync();
         //    if (page * size > totalCount)
@@ -38,7 +38,7 @@ namespace AiSoft.Tools.Extensions
         /// <param name="page">当前页</param>
         /// <param name="size">页大小</param>
         /// <returns></returns>
-        public static PagedList<T> ToPagedList<T>(this IOrderedQueryable<T> query, int page, int size)
+        public static PagedList<T> ToPagedList<T>(this IQueryable<T> query, int page, int size)
         {
             var totalCount = query.Count();
             if (page * size > totalCount)

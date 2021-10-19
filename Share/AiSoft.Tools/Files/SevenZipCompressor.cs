@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using AiSoft.Tools.Extensions;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Rar;
 using SharpCompress.Archives.Zip;
@@ -38,7 +39,7 @@ namespace AiSoft.Tools.Files
         /// <param name="files">多个文件路径，文件或文件夹，或网络路径http/https</param>
         /// <param name="rootDir"></param>
         /// <returns>文件流</returns>
-        public MemoryStream ZipStream(List<string> files, string rootDir = "")
+        public MemoryStream ZipStream(IEnumerable<string> files, string rootDir = "")
         {
             using (var archive = CreateZipArchive(files, rootDir))
             {
@@ -61,7 +62,7 @@ namespace AiSoft.Tools.Files
         /// <param name="files">多个文件路径，文件或文件夹</param>
         /// <param name="zipFile">压缩到...</param>
         /// <param name="rootDir">压缩包内部根文件夹</param>
-        public void Zip(List<string> files, string zipFile, string rootDir = "")
+        public void Zip(IEnumerable<string> files, string zipFile, string rootDir = "")
         {
             using (var archive = CreateZipArchive(files, rootDir))
             {
@@ -158,7 +159,7 @@ namespace AiSoft.Tools.Files
         /// <param name="files"></param>
         /// <param name="rootDir"></param>
         /// <returns></returns>
-        private ZipArchive CreateZipArchive(List<string> files, string rootDir)
+        private ZipArchive CreateZipArchive(IEnumerable<string> files, string rootDir)
         {
             var archive = ZipArchive.Create();
             var dic = GetFileEntryMaps(files);
@@ -208,7 +209,7 @@ namespace AiSoft.Tools.Files
         /// </summary>
         /// <param name="files"></param>
         /// <returns></returns>
-        private Dictionary<string, string> GetFileEntryMaps(List<string> files)
+        private Dictionary<string, string> GetFileEntryMaps(IEnumerable<string> files)
         {
             var fileList = new List<string>();
             void GetFilesRecurs(string path)
@@ -221,7 +222,7 @@ namespace AiSoft.Tools.Files
                     GetFilesRecurs(directory);
                 }
             }
-            files.Where(s => !s.StartsWith("http")).ToList().ForEach(s =>
+            files.Where(s => !s.StartsWith("http")).ForEach(s =>
             {
                 if (Directory.Exists(s))
                 {

@@ -116,21 +116,21 @@ namespace AiSoft.Tools.DateTimeExt
         /// </summary>
         public static string GetDateTimeF(this in DateTime dt) => dt.ToString("yyyy-MM-dd HH:mm:ss:fffffff");
 
-#if !NETFRAMEWORK
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// 获取该时间相对于1970-01-01T00:00:00Z的秒数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static double GetTotalSeconds(this in DateTime dt) => new DateTimeOffset(dt).ToUnixTimeSeconds();
+        public static long GetTotalSeconds(this in DateTime dt) => new DateTimeOffset(dt).ToUnixTimeSeconds();
 
         /// <summary>
         /// 获取该时间相对于1970-01-01T00:00:00Z的毫秒数
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static double GetTotalMilliseconds(this in DateTime dt) => new DateTimeOffset(dt).ToUnixTimeMilliseconds();
+        public static long GetTotalMilliseconds(this in DateTime dt) => new DateTimeOffset(dt).ToUnixTimeMilliseconds();
 
         /// <summary>
         /// 获取该时间相对于1970-01-01T00:00:00Z的纳秒时间戳
@@ -148,7 +148,7 @@ namespace AiSoft.Tools.DateTimeExt
             return ticks + Stopwatch.GetTimestamp() % 100;
         }
 
-#endif
+        #endif
 
         /// <summary>
         /// 获取该时间相对于1970-01-01T00:00:00Z的微秒时间戳

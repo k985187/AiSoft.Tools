@@ -23,6 +23,11 @@ namespace AiSoft.Tools.Strings
         public int Length => Characters?.Length ?? 0;
 
         /// <summary>
+        /// 起始值偏移
+        /// </summary>
+        private readonly byte _offset;
+
+        /// <summary>
         /// 数制格式化器
         /// </summary>
         public NumberFormater()
@@ -34,26 +39,38 @@ namespace AiSoft.Tools.Strings
         /// 数制格式化器
         /// </summary>
         /// <param name="characters">进制转换</param>
-        public NumberFormater(string characters)
+        /// <param name="offset">起始值偏移</param> 
+        public NumberFormater(string characters, byte offset = 0)
         {
+            if (string.IsNullOrEmpty(characters))
+            {
+                throw new ArgumentException("符号集不能为空");
+            }
             Characters = characters;
+            _offset = offset;
         }
 
         /// <summary>
         /// 数制格式化器
         /// </summary>
-        /// <param name="bin">进制</param>
-        public NumberFormater(int bin)
+        /// <param name="newBase">进制</param>
+        /// <param name="offset">起始值偏移</param>
+        public NumberFormater(byte newBase, byte offset = 0)
         {
-            if (bin < 2)
+            if (newBase < 2)
             {
-                bin = 2;
+                newBase = 2;
             }
-            if (bin > 64)
+            if (newBase > 64)
             {
                 throw new ArgumentException("默认进制最大支持64进制");
             }
-            Characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/".Substring(0, bin);
+            Characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/".Substring(0, newBase);
+            if (offset >= newBase)
+            {
+                throw new ArgumentException("偏移量不能超过进制基数" + newBase);
+            }
+            _offset = offset;
         }
 
         /// <summary>
@@ -63,13 +80,21 @@ namespace AiSoft.Tools.Strings
         /// <returns></returns>
         public string ToString(long number)
         {
+            var start = 0;
+            var resultOffset = 0;
+            if (_offset > 0)
+            {
+                start = 1;
+                resultOffset = _offset - 1;
+            }
+            number = number - resultOffset;
             var result = new List<string>();
             var t = Math.Abs(number);
             while (t != 0)
             {
                 var mod = t % Length;
                 t = Math.Abs(t / Length);
-                var character = Characters[Convert.ToInt32(mod)].ToString();
+                var character = Characters[Convert.ToInt32(mod) - start].ToString();
                 result.Insert(0, character);
             }
             if (number < 0)
@@ -86,6 +111,14 @@ namespace AiSoft.Tools.Strings
         /// <returns></returns>
         public string ToString(BigInteger number)
         {
+            var start = 0;
+            var resultOffset = 0;
+            if (_offset > 0)
+            {
+                start = 1;
+                resultOffset = _offset - 1;
+            }
+            number = number - resultOffset;
             var result = new List<string>();
             if (number < 0)
             {
@@ -97,7 +130,7 @@ namespace AiSoft.Tools.Strings
             {
                 var mod = t % Length;
                 t = BigInteger.Abs(BigInteger.Divide(t, Length));
-                var character = Characters[(int)mod].ToString();
+                var character = Characters[(int)mod - start].ToString();
                 result.Insert(0, character);
             }
             return string.Join("", result);
@@ -110,8 +143,15 @@ namespace AiSoft.Tools.Strings
         /// <returns></returns>
         public long FromString(string str)
         {
+            byte start = 0;
+            var resultOffset = 0;
+            if (_offset > 0)
+            {
+                start = 1;
+                resultOffset = _offset - 1;
+            }
             var j = 0;
-            return new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch)).Sum(ch => Characters.IndexOf(ch) * (long)Math.Pow(Length, j++));
+            return new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch)).Sum(ch => (Characters.IndexOf(ch) + start) * (long)Math.Pow(Length, j++)) + resultOffset;
         }
 
         /// <summary>
@@ -121,13 +161,22 @@ namespace AiSoft.Tools.Strings
         /// <returns></returns>
         public BigInteger FromStringBig(string str)
         {
+            byte start = 0;
+            var resultOffset = 0;
+            if (_offset > 0)
+            {
+                start = 1;
+                resultOffset = _offset - 1;
+            }
             var j = 0;
             var chars = new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch));
-            return chars.Aggregate(BigInteger.Zero, (current, c) => current + Characters.IndexOf(c) * BigInteger.Pow(Length, j++));
+            return chars.Aggregate(BigInteger.Zero, (current, c) => current + (Characters.IndexOf(c) + start) * BigInteger.Pow(Length, j++)) + resultOffset;
         }
 
-        /// <summary>Returns a string that represents the current object.</summary>
-        /// <returns>A string that represents the current object.</returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Length + "进制模式，进制符：" + Characters;
@@ -220,6 +269,7 @@ namespace AiSoft.Tools.Strings
                 {
                     result += temp;
                 }
+
                 result += "万";
                 temp = ChangeInt(x.Substring(len - 4, 4));
                 if (temp.IndexOf("千", StringComparison.Ordinal) == -1 && !string.IsNullOrEmpty(temp))
