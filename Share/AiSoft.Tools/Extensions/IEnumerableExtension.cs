@@ -564,5 +564,37 @@ namespace AiSoft.Tools.Extensions
             }
             return !enumerator2.MoveNext();
         }
+
+#if !NETFRAMEWORK
+
+        /// <summary>
+        /// 对比两个集合哪些是新增的、删除的、修改的
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="olds"></param>
+        /// <param name="news"></param>
+        /// <param name="key1Selector">对比因素属性</param>
+        /// <param name="key2Selector">对比因素属性</param>
+        /// <returns></returns>
+        public static (IEnumerable<T2> adds, IEnumerable<T1> remove, IEnumerable<T1> updates) CompareChanges<T1, T2>(this IEnumerable<T1> olds, IEnumerable<T2> news, Func<T1, object> key1Selector, Func<T2, object> key2Selector)
+        {
+            return (news.Where(c => olds.All(m => key1Selector(m) != key2Selector(c))), olds.Where(m => news.All(c => key2Selector(c) != key1Selector(m))), olds.Where(m => news.Any(c => key1Selector(m) == key2Selector(c))));
+        }
+
+        /// <summary>
+        /// 对比两个集合哪些是新增的、删除的、修改的
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="olds"></param>
+        /// <param name="news"></param>
+        /// <param name="keySelector">对比因素属性</param>
+        /// <returns></returns>
+        public static (IEnumerable<T> adds, IEnumerable<T> remove, IEnumerable<T> updates) CompareChanges<T>(this IEnumerable<T> olds, IEnumerable<T> news, Func<T, object> keySelector)
+        {
+            return (news.Where(c => olds.All(m => keySelector(m) != keySelector(c))), olds.Where(m => news.All(c => keySelector(c) != keySelector(m))), olds.Where(m => news.Any(c => keySelector(m) == keySelector(c))));
+        }
+
+#endif
     }
 }

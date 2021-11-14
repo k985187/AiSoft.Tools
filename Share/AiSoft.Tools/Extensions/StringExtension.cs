@@ -109,6 +109,50 @@ namespace AiSoft.Tools.Extensions
         }
 
         /// <summary>
+        /// 检测字符串中是否以列表中的关键词结尾
+        /// </summary>
+        /// <param name="s">源字符串</param>
+        /// <param name="keys">关键词列表</param>
+        /// <param name="ignoreCase">忽略大小写</param>
+        /// <returns></returns>
+        public static bool EndsWith(this string s, string[] keys, bool ignoreCase = true)
+        {
+            if (keys.Length == 0 || string.IsNullOrEmpty(s))
+            {
+                return false;
+            }
+            return ignoreCase ? keys.Any(key => s.EndsWith(key, StringComparison.CurrentCultureIgnoreCase)) : keys.Any(s.EndsWith);
+        }
+
+        /// <summary>
+        /// 检测字符串中是否包含列表中的关键词
+        /// </summary>
+        /// <param name="s">源字符串</param>
+        /// <param name="regex">关键词列表</param>
+        /// <param name="ignoreCase">忽略大小写</param>
+        /// <returns></returns>
+        public static bool RegexMatch(this string s, string regex, bool ignoreCase = true)
+        {
+            if (string.IsNullOrEmpty(regex) || string.IsNullOrEmpty(s))
+            {
+                return false;
+            }
+            if (ignoreCase)
+            {
+                return Regex.IsMatch(s, regex, RegexOptions.IgnoreCase);
+            }
+            return Regex.IsMatch(s, regex);
+        }
+
+        /// <summary>
+        /// 检测字符串中是否包含列表中的关键词
+        /// </summary>
+        /// <param name="s">源字符串</param>
+        /// <param name="regex">关键词列表</param>
+        /// <returns></returns>
+        public static bool RegexMatch(this string s, Regex regex) => !string.IsNullOrEmpty(s) && regex.IsMatch(s);
+
+        /// <summary>
         /// 判断是否包含符号
         /// </summary>
         /// <param name="str"></param>
@@ -190,7 +234,7 @@ namespace AiSoft.Tools.Extensions
             {
                 return new EmailMatchModel{IsMatch = false, Match=null};
             }
-            var match = Regex.Match(s, @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
+            var match = Regex.Match(s, @"[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+");
             var isMatch = match.Success;
             if (isMatch && valid)
             {
