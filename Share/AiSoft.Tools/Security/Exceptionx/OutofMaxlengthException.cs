@@ -1,7 +1,5 @@
 ﻿using System;
-#if !NETFRAMEWORK
-    using System.Security.Cryptography;
-#endif
+using System.Security.Cryptography;
 
 namespace AiSoft.Tools.Security.Exceptionx
 {
@@ -25,8 +23,6 @@ namespace AiSoft.Tools.Security.Exceptionx
         /// Rsa key size
         /// </summary>
         public int KeySize { get; private set; }
-
-#if !NETFRAMEWORK
 
         /// <summary>
         /// Rsa padding
@@ -53,8 +49,5 @@ namespace AiSoft.Tools.Security.Exceptionx
         {
             ErrorMessage = message;
         }
-
-#endif
-
     }
 }

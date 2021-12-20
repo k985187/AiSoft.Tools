@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -170,6 +171,14 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static async Task ForeachAsync<T>(this IEnumerable<T> source, Func<T, Task> action, int maxParallelCount, CancellationToken cancellationToken = default)
         {
+            if (Debugger.IsAttached)
+            {
+                foreach (var item in source)
+                {
+                    await action(item);
+                }
+                return;
+            }
             var list = new List<Task>();
             foreach (var item in source)
             {
@@ -237,8 +246,17 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static async Task ForAsync<T>(this IEnumerable<T> source, Func<T, int, Task> selector, int maxParallelCount, CancellationToken cancellationToken = default)
         {
+            int index = 0;
+            if (Debugger.IsAttached)
+            {
+                foreach (var item in source)
+                {
+                    await selector(item, index);
+                    index++;
+                }
+                return;
+            }
             var list = new List<Task>();
-            var index = 0;
             foreach (var item in source)
             {
                 if (cancellationToken.IsCancellationRequested)
@@ -246,6 +264,7 @@ namespace AiSoft.Tools.Extensions
                     return;
                 }
                 list.Add(selector(item, index++));
+                Interlocked.Add(ref index, 1);
                 if (list.Count >= maxParallelCount)
                 {
                     await Task.WhenAll(list);
@@ -565,8 +584,6 @@ namespace AiSoft.Tools.Extensions
             return !enumerator2.MoveNext();
         }
 
-#if !NETFRAMEWORK
-
         /// <summary>
         /// 对比两个集合哪些是新增的、删除的、修改的
         /// </summary>
@@ -577,9 +594,9 @@ namespace AiSoft.Tools.Extensions
         /// <param name="key1Selector">对比因素属性</param>
         /// <param name="key2Selector">对比因素属性</param>
         /// <returns></returns>
-        public static (IEnumerable<T2> adds, IEnumerable<T1> remove, IEnumerable<T1> updates) CompareChanges<T1, T2>(this IEnumerable<T1> olds, IEnumerable<T2> news, Func<T1, object> key1Selector, Func<T2, object> key2Selector)
+        public static (List<T2> adds, List<T1> remove, List<T1> updates) CompareChanges<T1, T2>(this IEnumerable<T1> olds, IEnumerable<T2> news, Func<T1, object> key1Selector, Func<T2, object> key2Selector)
         {
-            return (news.Where(c => olds.All(m => key1Selector(m) != key2Selector(c))), olds.Where(m => news.All(c => key2Selector(c) != key1Selector(m))), olds.Where(m => news.Any(c => key1Selector(m) == key2Selector(c))));
+            return (news.Where(c => olds.All(m => key1Selector(m) != key2Selector(c))).ToList(), olds.Where(m => news.All(c => key2Selector(c) != key1Selector(m))).ToList(), olds.Where(m => news.Any(c => key1Selector(m) == key2Selector(c))).ToList());
         }
 
         /// <summary>
@@ -590,11 +607,9 @@ namespace AiSoft.Tools.Extensions
         /// <param name="news"></param>
         /// <param name="keySelector">对比因素属性</param>
         /// <returns></returns>
-        public static (IEnumerable<T> adds, IEnumerable<T> remove, IEnumerable<T> updates) CompareChanges<T>(this IEnumerable<T> olds, IEnumerable<T> news, Func<T, object> keySelector)
+        public static (List<T> adds, List<T> remove, List<T> updates) CompareChanges<T>(this IEnumerable<T> olds, IEnumerable<T> news, Func<T, object> keySelector)
         {
-            return (news.Where(c => olds.All(m => keySelector(m) != keySelector(c))), olds.Where(m => news.All(c => keySelector(c) != keySelector(m))), olds.Where(m => news.Any(c => keySelector(m) == keySelector(c))));
+            return (news.Where(c => olds.All(m => keySelector(m) != keySelector(c))).ToList(), olds.Where(m => news.All(c => keySelector(c) != keySelector(m))).ToList(), olds.Where(m => news.Any(c => keySelector(m) == keySelector(c))).ToList());
         }
-
-#endif
     }
 }

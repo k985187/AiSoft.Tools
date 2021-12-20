@@ -116,8 +116,6 @@ namespace AiSoft.Tools.DateTimeExt
         /// </summary>
         public static string GetDateTimeF(this in DateTime dt) => dt.ToString("yyyy-MM-dd HH:mm:ss:fffffff");
 
-        #if !NETFRAMEWORK
-
         /// <summary>
         /// 获取该时间相对于1970-01-01T00:00:00Z的秒数
         /// </summary>
@@ -147,8 +145,6 @@ namespace AiSoft.Tools.DateTimeExt
             }
             return ticks + Stopwatch.GetTimestamp() % 100;
         }
-
-        #endif
 
         /// <summary>
         /// 获取该时间相对于1970-01-01T00:00:00Z的微秒时间戳

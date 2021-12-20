@@ -43,7 +43,6 @@ namespace AiSoft.Tools.Api
                 }
                 return true;
             }, IntPtr.Zero);
-
             return intPtr;
         }
     }

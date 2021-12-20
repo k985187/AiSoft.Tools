@@ -292,7 +292,7 @@ namespace AiSoft.Tools.Extensions
             {
                 sw.Close();
                 stream.Close();
-#if (NETCOREAPP || NET)
+#if !NETSTANDARD
                 await sw.DisposeAsync().ConfigureAwait(false);
                 await stream.DisposeAsync().ConfigureAwait(false); 
 #else
@@ -302,8 +302,7 @@ namespace AiSoft.Tools.Extensions
             }
         }
 
-#if (NETCOREAPP || NET)
-
+#if !NETSTANDARD
         /// <summary>
         /// 
         /// </summary>

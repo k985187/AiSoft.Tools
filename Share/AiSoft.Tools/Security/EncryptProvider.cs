@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-#if (NETCOREAPP || NET)
+#if !NETSTANDARD
     using AiSoft.Tools.Security.Exceptionx;
 #endif
 using AiSoft.Tools.Security.Extensions.Internal;
@@ -530,7 +530,7 @@ namespace AiSoft.Tools.Security
             return RsaProvider.FromPem(pem);
         }
 
-#if (NETCOREAPP || NET)
+#if !NETSTANDARD
 
         /// <summary>
         /// RSA Converter to pem
@@ -1204,7 +1204,6 @@ namespace AiSoft.Tools.Security
                 str_sha384_out = str_sha384_out.Replace("-", "");
                 return str_sha384_out;
             }
-
         }
 
         /// <summary>

@@ -13,36 +13,13 @@ namespace AiSoft.Tools.Extensions
         /// <typeparam name="TKey"></typeparam>
         /// <typeparam name="TValue"></typeparam>
         /// <param name="this"></param>
-        /// <param name="key">键</param>
-        /// <param name="value">值</param>
-        /// <returns></returns>
-        public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, TValue value)
-        {
-            if (!@this.ContainsKey(key))
-            {
-                @this.Add(key, value);
-            }
-            else
-            {
-                @this[key] = value;
-            }
-
-            return @this[key];
-        }
-
-        /// <summary>
-        /// 添加或更新键值对
-        /// </summary>
-        /// <typeparam name="TKey"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        /// <param name="this"></param>
         /// <param name="that">另一个字典集</param>
         /// <returns></returns>
         public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> @this, IDictionary<TKey, TValue> that)
         {
             foreach (var item in that)
             {
-                AddOrUpdate(@this, item.Key, item.Value);
+                @this[item.Key] = item.Value;
             }
         }
 
@@ -58,7 +35,7 @@ namespace AiSoft.Tools.Extensions
         {
             foreach (var item in @this)
             {
-                AddOrUpdate(that, item.Key, item.Value);
+                that[item.Key] = item.Value;
             }
         }
 
@@ -328,7 +305,7 @@ namespace AiSoft.Tools.Extensions
             var dic = new Dictionary<TKey, TSource>();
             foreach (var item in source)
             {
-                AddOrUpdate(dic, keySelector(item), item);
+                dic[keySelector(item)] = item;
             }
             return dic;
         }
@@ -348,7 +325,7 @@ namespace AiSoft.Tools.Extensions
             var dic = new Dictionary<TKey, TElement>();
             foreach (var item in source)
             {
-                AddOrUpdate(dic, keySelector(item), elementSelector(item));
+                dic[keySelector(item)] = elementSelector(item);
             }
             return dic;
         }
@@ -366,7 +343,7 @@ namespace AiSoft.Tools.Extensions
         public static async Task<IDictionary<TKey, TElement>> ToDictionarySafetyAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector)
         {
             var dic = new ConcurrentDictionary<TKey, TElement>();
-            await source.ForeachAsync(async item => dic.AddOrUpdate(keySelector(item), await elementSelector(item)));
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
             return dic;
         }
 
@@ -384,7 +361,7 @@ namespace AiSoft.Tools.Extensions
             var dic = new ConcurrentDictionary<TKey, TSource>();
             foreach (var item in source)
             {
-                AddOrUpdate(dic, keySelector(item), item);
+                dic[keySelector(item)] = item;
             }
             return dic;
         }
@@ -404,7 +381,7 @@ namespace AiSoft.Tools.Extensions
             var dic = new ConcurrentDictionary<TKey, TElement>();
             foreach (var item in source)
             {
-                AddOrUpdate(dic, keySelector(item), elementSelector(item));
+                dic[keySelector(item)] = elementSelector(item);
             }
             return dic;
         }
@@ -422,7 +399,7 @@ namespace AiSoft.Tools.Extensions
         public static async Task<ConcurrentDictionary<TKey, TElement>> ToConcurrentDictionaryAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector)
         {
             var dic = new ConcurrentDictionary<TKey, TElement>();
-            await source.ForeachAsync(async item => dic.AddOrUpdate(keySelector(item), await elementSelector(item)));
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
             return dic;
         }
 

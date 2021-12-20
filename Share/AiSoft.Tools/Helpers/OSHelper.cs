@@ -3,8 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace AiSoft.Tools.Helpers
 {
-#if !NETFRAMEWORK
-
     public class OSHelper
     {
         /// <summary>
@@ -34,6 +32,4 @@ namespace AiSoft.Tools.Helpers
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         }
     }
-
-#endif
 }

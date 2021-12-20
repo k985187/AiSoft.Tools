@@ -252,8 +252,6 @@ namespace AiSoft.Tools.Extensions
             return new EmailMatchModel{IsMatch = isMatch, Match=match};
         }
 
-#if !NETFRAMEWORK
-
         /// <summary>
         /// 匹配Email
         /// </summary>
@@ -284,8 +282,6 @@ namespace AiSoft.Tools.Extensions
             }
             return (isMatch, match);
         }
-
-#endif
 
         /// <summary>
         /// 邮箱掩码
