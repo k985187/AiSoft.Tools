@@ -28,7 +28,7 @@ namespace AiSoft.Tools.Extensions
             {
                 return bytes;
             }
-            return EncryptProvider.AESEncrypt(bytes, key ?? AesKey, iv ?? AesIv);
+            return EncryptProvider.AESEncrypt(bytes, string.IsNullOrWhiteSpace(key) ? AesKey : key, string.IsNullOrWhiteSpace(iv) ? AesIv : iv);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace AiSoft.Tools.Extensions
             {
                 return bytes;
             }
-            return EncryptProvider.AESDecrypt(bytes, key ?? AesKey, iv ?? AesIv);
+            return EncryptProvider.AESDecrypt(bytes, string.IsNullOrWhiteSpace(key) ? AesKey : key, string.IsNullOrWhiteSpace(iv) ? AesIv : iv);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace AiSoft.Tools.Extensions
             {
                 return str;
             }
-            return EncryptProvider.AESEncrypt(str, key ?? AesKey, iv ?? AesIv);
+            return EncryptProvider.AESEncrypt(str, string.IsNullOrWhiteSpace(key) ? AesKey : key, string.IsNullOrWhiteSpace(iv) ? AesIv : iv);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace AiSoft.Tools.Extensions
             {
                 return str;
             }
-            return EncryptProvider.AESDecrypt(str, key ?? AesKey, iv ?? AesIv);
+            return EncryptProvider.AESDecrypt(str, string.IsNullOrWhiteSpace(key) ? AesKey : key, string.IsNullOrWhiteSpace(iv) ? AesIv : iv);
         }
     }
 }
