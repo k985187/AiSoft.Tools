@@ -1,9 +1,9 @@
 ﻿using System;
 using AiSoft.Tools.Security;
 
-namespace AiSoft.Tools.Helpers
+namespace AiSoft.Tools.Extensions
 {
-    public static class EncryptHelper
+    public static class EncryptExtensions
     {
         /// <summary>
         /// 加密Key(32位)
@@ -19,56 +19,64 @@ namespace AiSoft.Tools.Helpers
         /// 数组加密
         /// </summary>
         /// <param name="bytes"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
         /// <returns></returns>
-        public static byte[] EncryptTo(this byte[] bytes)
+        public static byte[] EncryptTo(this byte[] bytes, string key = null, string iv = null)
         {
             if (bytes == null)
             {
                 return bytes;
             }
-            return EncryptProvider.AESEncrypt(bytes, AesKey, AesIv);
+            return EncryptProvider.AESEncrypt(bytes, key ?? AesKey, iv ?? AesIv);
         }
 
         /// <summary>
         /// 数组解密
         /// </summary>
         /// <param name="bytes"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
         /// <returns></returns>
-        public static byte[] DecryptTo(this byte[] bytes)
+        public static byte[] DecryptTo(this byte[] bytes, string key = null, string iv = null)
         {
             if (bytes == null)
             {
                 return bytes;
             }
-            return EncryptProvider.AESDecrypt(bytes, AesKey, AesIv);
+            return EncryptProvider.AESDecrypt(bytes, key ?? AesKey, iv ?? AesIv);
         }
 
         /// <summary>
         /// 字符串加密
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param> 
         /// <returns></returns>
-        public static string EncryptTo(this string str)
+        public static string EncryptTo(this string str, string key = null, string iv = null)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
                 return str;
             }
-            return EncryptProvider.AESEncrypt(str, AesKey, AesIv);
+            return EncryptProvider.AESEncrypt(str, key ?? AesKey, iv ?? AesIv);
         }
 
         /// <summary>
         /// 字符串解密
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param> 
         /// <returns></returns>
-        public static string DecryptTo(this string str)
+        public static string DecryptTo(this string str, string key = null, string iv = null)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
                 return str;
             }
-            return EncryptProvider.AESDecrypt(str, AesKey, AesIv);
+            return EncryptProvider.AESDecrypt(str, key ?? AesKey, iv ?? AesIv);
         }
     }
 }
