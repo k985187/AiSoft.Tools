@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -35,6 +36,34 @@ namespace AiSoft.Tools.Extensions
             foreach (var obj in values)
             {
                 @this.Add(obj);
+            }
+        }
+
+        /// <summary>
+        /// 添加多个元素
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="this"></param>
+        /// <param name="values"></param>
+        public static void AddRange<T>(this ConcurrentBag<T> @this, params T[] values)
+        {
+            foreach (var obj in values)
+            {
+                @this.Add(obj);
+            }
+        }
+
+        /// <summary>
+        /// 添加多个元素
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="this"></param>
+        /// <param name="values"></param>
+        public static void AddRange<T>(this ConcurrentQueue<T> @this, params T[] values)
+        {
+            foreach (var obj in values)
+            {
+                @this.Enqueue(obj);
             }
         }
 

@@ -131,7 +131,8 @@ namespace AiSoft.Tools.Helpers
         /// 查找进程
         /// </summary>
         /// <param name="file"></param>
-        public static List<Process> SearchProcess(string file)
+        /// <param name="isFullPath">是否全路径</param>
+        public static List<Process> SearchProcess(string file, bool isFullPath = true)
         {
             var proList = new List<Process>();
             if (string.IsNullOrEmpty(file))
@@ -145,9 +146,19 @@ namespace AiSoft.Tools.Helpers
                 {
                     var pro = pros[i];
                     var runFile = pro.MainModule.FileName;
-                    if (runFile.ToLower() == file.ToLower().Replace("/", "\\").Replace(@"\\", @"\"))
+                    if (isFullPath)
                     {
-                        proList.Add(pro);
+                        if (runFile.ToLower() == file.ToLower().Replace("/", "\\").Replace(@"\\", @"\"))
+                        {
+                            proList.Add(pro);
+                        }
+                    }
+                    else
+                    {
+                        if (runFile.ToLower().EndsWith(file.ToLower().Replace("/", "\\").Replace(@"\\", @"\")))
+                        {
+                            proList.Add(pro);
+                        }
                     }
                 }
                 catch (Exception e)

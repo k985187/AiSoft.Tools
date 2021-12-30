@@ -8,7 +8,7 @@ namespace AiSoft.Tools.Extensions
     /// <summary>
     /// 树形数据扩展
     /// </summary>
-    public static class TreeExtension
+    public static class TreeExtensions
     {
         /// <summary>
         /// 过滤
@@ -39,6 +39,31 @@ namespace AiSoft.Tools.Extensions
         /// 过滤
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static IEnumerable<Tree<T>> Filter<T>(this IEnumerable<Tree<T>> items, Func<Tree<T>, bool> func) where T : class
+        {
+            var results = new List<Tree<T>>();
+            foreach (var item in items.Where(i => i != null))
+            {
+                if (item.Children == null)
+                {
+                    item.Children = new List<Tree<T>>();
+                }
+                item.Children = item.Children.Filter(func).ToList();
+                if (item.Children.Any() || func(item))
+                {
+                    results.Add(item);
+                }
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// 过滤
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="item"></param>
         /// <param name="func"></param>
         /// <returns></returns>
@@ -48,12 +73,25 @@ namespace AiSoft.Tools.Extensions
         }
 
         /// <summary>
+        /// 过滤
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static IEnumerable<Tree<T>> Filter<T>(this Tree<T> item, Func<Tree<T>, bool> func) where T : class
+        {
+            return new[] { item }.Filter(func);
+        }
+
+        /// <summary>
         /// 平铺开
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
+        /// <param name="optionAction">平铺时子级需要做的操作，参数1：子级对象，参数2：父级对象</param>
         /// <returns></returns>
-        public static IEnumerable<T> Flatten<T>(this IEnumerable<T> items) where T : class, ITreeChildren<T>
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<T> items, Action<T, T> optionAction = null) where T : class, ITreeChildren<T>
         {
             var result = new List<T>();
             foreach (var item in items)
@@ -63,9 +101,9 @@ namespace AiSoft.Tools.Extensions
                 {
                     item.Children = new List<T>();
                 }
-                result.AddRange(item.Children.Flatten());
+                item.Children.ForEach(c => optionAction?.Invoke(c, item));
+                result.AddRange(item.Children.Flatten(optionAction));
             }
-
             return result;
         }
 
@@ -73,8 +111,10 @@ namespace AiSoft.Tools.Extensions
         /// 平铺开
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <param name="p"></param>
+        /// <param name="optionAction">平铺时子级需要做的操作，参数1：子级对象，参数2：父级对象</param>
         /// <returns></returns>
-        public static IEnumerable<T> Flatten<T>(this T p) where T : class, ITreeChildren<T>
+        public static IEnumerable<T> Flatten<T>(this T p, Action<T, T> optionAction = null) where T : class, ITreeChildren<T>
         {
             var result = new List<T>()
             {
@@ -87,9 +127,9 @@ namespace AiSoft.Tools.Extensions
                 {
                     item.Children = new List<T>();
                 }
+                item.Children.ForEach(c => optionAction?.Invoke(c, item));
                 result.AddRange(item.Children.Flatten());
             }
-
             return result;
         }
 
@@ -99,16 +139,86 @@ namespace AiSoft.Tools.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="items"></param>
         /// <param name="selector"></param>
+        /// <param name="optionAction">平铺时子级需要做的操作，参数1：子级对象，参数2：父级对象</param>
         /// <returns></returns>
-        public static IEnumerable<T> Flatten<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> selector)
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<T> items, Func<T, IEnumerable<T>> selector, Action<T, T> optionAction = null)
         {
             var result = new List<T>();
             foreach (var item in items)
             {
                 result.Add(item);
+                selector(item).ForEach(c => optionAction?.Invoke(c, item));
                 result.AddRange(selector(item).Flatten(selector));
             }
+            return result;
+        }
 
+        /// <summary>
+        /// 平铺开
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="optionAction">平铺时子级需要做的操作，参数1：子级对象，参数2：父级对象</param>
+        /// <returns></returns>
+        public static IEnumerable<Tree<T>> Flatten<T>(this IEnumerable<Tree<T>> items, Action<Tree<T>, Tree<T>> optionAction = null) where T : class
+        {
+            var result = new List<Tree<T>>();
+            foreach (var item in items)
+            {
+                result.Add(item);
+                if (item.Children == null)
+                {
+                    item.Children = new List<Tree<T>>();
+                }
+                item.Children.ForEach(c => optionAction?.Invoke(c, item));
+                result.AddRange(item.Children.Flatten());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 平铺开
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="p"></param>
+        /// <param name="optionAction">平铺时子级需要做的操作，参数1：子级对象，参数2：父级对象</param>
+        /// <returns></returns>
+        public static IEnumerable<Tree<T>> Flatten<T>(this Tree<T> p, Action<Tree<T>, Tree<T>> optionAction = null) where T : class
+        {
+            var result = new List<Tree<T>>()
+            {
+                p
+            };
+            foreach (var item in p.Children)
+            {
+                result.Add(item);
+                if (item.Children == null)
+                {
+                    item.Children = new List<Tree<T>>();
+                }
+                item.Children.ForEach(c => optionAction?.Invoke(c, item));
+                result.AddRange(item.Children.Flatten());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 平铺开任意树形结构数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="selector"></param>
+        /// <param name="optionAction">平铺时子级需要做的操作，参数1：子级对象，参数2：父级对象</param>
+        /// <returns></returns>
+        public static IEnumerable<Tree<T>> Flatten<T>(this IEnumerable<Tree<T>> items, Func<Tree<T>, IEnumerable<Tree<T>>> selector, Action<Tree<T>, Tree<T>> optionAction = null)
+        {
+            var result = new List<Tree<T>>();
+            foreach (var item in items)
+            {
+                result.Add(item);
+                item.Children.ForEach(c => optionAction?.Invoke(c, item));
+                result.AddRange(selector(item).Flatten(selector));
+            }
             return result;
         }
 
@@ -259,7 +369,17 @@ namespace AiSoft.Tools.Extensions
         /// <summary>
         /// 所有子级
         /// </summary>
-        public static ICollection<T> AllChildren<T>(this T tree, Func<T, IEnumerable<T>> selector) => GetChildren(tree, selector);
+        public static ICollection<T> AllChildren<T>(this T tree, Func<T, IEnumerable<T>> selector) where T : ITreeChildren<T> => GetChildren(tree, selector);
+
+        /// <summary>
+        /// 所有子级
+        /// </summary>
+        public static ICollection<Tree<T>> AllChildren<T>(this Tree<T> tree) => GetChildren(tree, c => c.Children);
+
+        /// <summary>
+        /// 所有子级
+        /// </summary>
+        public static ICollection<Tree<T>> AllChildren<T>(this Tree<T> tree, Func<Tree<T>, IEnumerable<Tree<T>>> selector) => GetChildren(tree, selector);
 
         /// <summary>
         /// 所有父级
@@ -269,7 +389,12 @@ namespace AiSoft.Tools.Extensions
         /// <summary>
         /// 所有父级
         /// </summary>
-        public static ICollection<T> AllParent<T>(this T tree, Func<T, T> selector) => GetParents(tree, selector);
+        public static ICollection<T> AllParent<T>(this T tree, Func<T, T> selector) where T : ITreeParent<T> => GetParents(tree, selector);
+
+        /// <summary>
+        /// 所有父级
+        /// </summary>
+        public static ICollection<Tree<T>> AllParent<T>(this Tree<T> tree, Func<Tree<T>, Tree<T>> selector) => GetParents(tree, selector);
 
         /// <summary>
         /// 是否是根节点
@@ -280,6 +405,16 @@ namespace AiSoft.Tools.Extensions
         /// 是否是叶子节点
         /// </summary>
         public static bool IsLeaf<T>(this ITreeChildren<T> tree) where T : ITreeChildren<T> => tree.Children?.Count == 0;
+
+        /// <summary>
+        /// 是否是根节点
+        /// </summary>
+        public static bool IsRoot<T>(this Tree<T> tree) => tree.Parent == null;
+
+        /// <summary>
+        /// 是否是叶子节点
+        /// </summary>
+        public static bool IsLeaf<T>(this Tree<T> tree) => tree.Children?.Count == 0;
 
         /// <summary>
         /// 深度层级
