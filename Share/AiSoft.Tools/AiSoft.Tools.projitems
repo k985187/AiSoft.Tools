@@ -50,7 +50,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\JsonConfigHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LogHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\OSHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ProcessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Thread\ProcessHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Thread\ProcessThreadInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Thread\ThreadHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\MultiThreadDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\PartialDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NotifyBase\PropertyBase.cs" />
@@ -71,6 +73,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Security\Shared\Check.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Strings\ChineseString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Strings\NumberFormater.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableConcurrentDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\NullObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\RandomPort.cs" />

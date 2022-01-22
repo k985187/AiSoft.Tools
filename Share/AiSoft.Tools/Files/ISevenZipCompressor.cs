@@ -15,8 +15,7 @@ namespace AiSoft.Tools.Files
         /// </summary>
         /// <param name="compressedFile">rar文件</param>
         /// <param name="dir">解压到...</param>
-        /// <param name="ignoreEmptyDir">忽略空文件夹</param>
-        void Decompress(string compressedFile, string dir = "", bool ignoreEmptyDir = true);
+        void Decompress(string compressedFile, string dir = "");
 
         /// <summary>
         /// 压缩多个文件

@@ -42,7 +42,7 @@ namespace AiSoft.Tools.Files
             using (var archive = CreateZipArchive(files, rootDir, archiveType))
             {
                 var ms = new MemoryStream();
-                archive.SaveTo(ms, new WriterOptions(CompressionType.Deflate)
+                archive.SaveTo(ms, new WriterOptions(CompressionType.LZMA)
                 {
                     LeaveStreamOpen = true,
                     ArchiveEncoding = new ArchiveEncoding {Default = Encoding.UTF8}
@@ -62,7 +62,7 @@ namespace AiSoft.Tools.Files
         {
             using (var archive = CreateZipArchive(files, rootDir, archiveType))
             {
-                archive.SaveTo(zipFile, new WriterOptions(CompressionType.Deflate)
+                archive.SaveTo(zipFile, new WriterOptions(CompressionType.LZMA)
                 {
                     LeaveStreamOpen = true,
                     ArchiveEncoding = new ArchiveEncoding {Default = Encoding.UTF8}
@@ -75,14 +75,13 @@ namespace AiSoft.Tools.Files
         /// </summary>
         /// <param name="compressedFile">rar文件</param>
         /// <param name="dir">解压到...</param>
-        /// <param name="ignoreEmptyDir">忽略空文件夹</param>
-        public void Decompress(string compressedFile, string dir = "", bool ignoreEmptyDir = true)
+        public void Decompress(string compressedFile, string dir = "")
         {
             if (string.IsNullOrEmpty(dir))
             {
                 dir = Path.GetDirectoryName(compressedFile);
             }
-            ArchiveFactory.WriteToDirectory(compressedFile, dir, new ExtractionOptions {ExtractFullPath = true});
+            ArchiveFactory.WriteToDirectory(compressedFile, dir, new ExtractionOptions {ExtractFullPath = true, Overwrite = true});
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace AiSoft.Tools.Files
         /// <param name="rootDir"></param>
         /// <param name="archiveType"></param>
         /// <returns></returns>
-        private IWritableArchive CreateZipArchive(IEnumerable<string> files, string rootDir, ArchiveType archiveType)
+        private IWritableArchive CreateZipArchive(IEnumerable<string> files, string rootDir, ArchiveType archiveType = ArchiveType.Zip)
         {
             var archive = ArchiveFactory.Create(archiveType);
             var dic = GetFileEntryMaps(files);

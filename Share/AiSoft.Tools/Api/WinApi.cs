@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace AiSoft.Tools.Api
 {
@@ -79,5 +80,37 @@ namespace AiSoft.Tools.Api
 
         [DllImport("Kernel32.dll")]
         public static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
+
+
+        public const uint WM_GETTEXT = 0x000D;
+
+        [DllImport("User32.dll")]
+        public static extern IntPtr SetFocus(IntPtr hWnd);
+
+        [DllImport("User32.dll")]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, uint lpdwProcessId = 0);
+
+        public delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lParam);
+
+        [DllImport("User32.dll")]
+        public static extern bool EnumThreadWindows(int dwThreadId, EnumWindowsDelegate lpfn, IntPtr lParam);
+
+        [DllImport("User32.dll")]
+        public static extern bool EnumWindows(EnumWindowsDelegate lpfn, IntPtr lParam);
+
+        [DllImport("User32.dll")]
+        public static extern bool EnumChildWindows(IntPtr hWndParent, EnumWindowsDelegate lpfn, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
+
+        [DllImport("User32.dll")]
+        public static extern bool AttachThreadInput(int idAttach, int idAttachTo, bool fAttach);
+
+        [DllImport("Kernel32.dll")]
+        public static extern int GetCurrentThreadId();
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, StringBuilder lParam);
     }
 }
