@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using AiSoft.Tools.Systems;
 using SharpCompress.Common;
 
 namespace AiSoft.Tools.Files
@@ -27,6 +28,15 @@ namespace AiSoft.Tools.Files
         void Zip(IEnumerable<string> files, string zipFile, string rootDir = "", ArchiveType archiveType = ArchiveType.SevenZip);
 
         /// <summary>
+        /// 压缩多个文件
+        /// </summary>
+        /// <param name="streams">多个文件流</param>
+        /// <param name="zipFile">压缩到...</param>
+        /// <param name="archiveType"></param>
+        /// <param name="disposeAllStreams">是否需要释放所有流</param>
+        void Zip(DisposeableDictionary<string, Stream> streams, string zipFile, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false);
+
+        /// <summary>
         /// 将多个文件压缩到一个文件流中，可保存为zip文件，方便于web方式下载
         /// </summary>
         /// <param name="files">多个文件路径，文件或文件夹，或网络路径http/https</param>
@@ -34,5 +44,14 @@ namespace AiSoft.Tools.Files
         /// <param name="archiveType"></param>
         /// <returns>文件流</returns>
         MemoryStream ZipStream(IEnumerable<string> files, string rootDir = "", ArchiveType archiveType = ArchiveType.SevenZip);
+
+        /// <summary>
+        /// 将多个文件压缩到一个文件流中，可保存为zip文件，方便于web方式下载
+        /// </summary>
+        /// <param name="streams">多个文件流</param>
+        /// <param name="archiveType"></param>
+        /// <param name="disposeAllStreams">是否需要释放所有流</param>
+        /// <returns>文件流</returns>
+        MemoryStream ZipStream(DisposeableDictionary<string, Stream> streams, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false);
     }
 }

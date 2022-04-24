@@ -64,7 +64,10 @@ namespace AiSoft.Tools.Net
             {
                 try
                 {
-                    return PartialDownloaderList.Where(t => t != null).Sum(t => t.TotalBytesRead);
+                    lock (this)
+                    {
+                        return PartialDownloaderList.Where(t => t != null).Sum(t => t.TotalBytesRead);
+                    }
                 }
                 catch
                 {
@@ -86,7 +89,16 @@ namespace AiSoft.Tools.Net
         /// <summary>
         /// 下载速度
         /// </summary>
-        public float TotalSpeedInBytes => PartialDownloaderList.Sum(t => t.SpeedInBytes);
+        public float TotalSpeedInBytes
+        {
+            get
+            {
+                lock (this)
+                {
+                    return PartialDownloaderList.Sum(t => t.SpeedInBytes);
+                }
+            }
+        }
 
         /// <summary>
         /// 下载块
@@ -186,7 +198,10 @@ namespace AiSoft.Tools.Net
             var temp = new PartialDownloader(_url, TempFileDirectory, Guid.NewGuid().ToString(), from, to, true);
             temp.DownloadPartCompleted += Temp_DownloadPartCompleted;
             temp.DownloadPartProgressChanged += Temp_DownloadPartProgressChanged;
-            PartialDownloaderList.Add(temp);
+            lock (this)
+            {
+                PartialDownloaderList.Add(temp);
+            }
             temp.Start(_requestConfigure);
         }
 
@@ -227,7 +242,10 @@ namespace AiSoft.Tools.Net
                 var temp = CreateNew(i, NumberOfParts, Size);
                 temp.DownloadPartProgressChanged += Temp_DownloadPartProgressChanged;
                 temp.DownloadPartCompleted += Temp_DownloadPartCompleted;
-                PartialDownloaderList.Add(temp);
+                lock (this)
+                {
+                    PartialDownloaderList.Add(temp);
+                }
                 temp.Start(_requestConfigure);
             }
         }
@@ -288,15 +306,15 @@ namespace AiSoft.Tools.Net
         /// <param name="wait"></param>
         public static void WaitOrResumeAll(List<PartialDownloader> list, bool wait)
         {
-            foreach (var item in list)
+            for (var index = 0; index < list.Count; index++)
             {
                 if (wait)
                 {
-                    item.Wait();
+                    list[index].Wait();
                 }
                 else
                 {
-                    item.ResumeAfterWait();
+                    list[index].ResumeAfterWait();
                 }
             }
         }
@@ -338,9 +356,12 @@ namespace AiSoft.Tools.Net
         /// </summary>
         public void Pause()
         {
-            foreach (var t in PartialDownloaderList.Where(t => !t.Completed))
+            lock (this)
             {
-                t.Stop();
+                foreach (var t in PartialDownloaderList.Where(t => !t.Completed))
+                {
+                    t.Stop();
+                }
             }
 
             Thread.Sleep(200);
@@ -375,7 +396,10 @@ namespace AiSoft.Tools.Net
                     var temp = new PartialDownloader(_url, TempFileDirectory, Guid.NewGuid().ToString(), from, to, _rangeAllowed);
                     temp.DownloadPartProgressChanged += Temp_DownloadPartProgressChanged;
                     temp.DownloadPartCompleted += Temp_DownloadPartCompleted;
-                    PartialDownloaderList.Add(temp);
+                    lock (this)
+                    {
+                        PartialDownloaderList.Add(temp);
+                    }
                     PartialDownloaderList[i].To = PartialDownloaderList[i].CurrentPosition;
                     temp.Start(_requestConfigure);
                 }

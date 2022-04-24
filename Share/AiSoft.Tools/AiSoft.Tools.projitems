@@ -56,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Net\MultiThreadDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Net\PartialDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NotifyBase\PropertyBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Reflection\ReflectionUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\EncryptProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Exceptionx\OutofMaxlengthException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Extensions\EncryptExtensions.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Security\Shared\Check.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Strings\ChineseString.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Strings\NumberFormater.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\DisposeableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableConcurrentDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullObject.cs" />

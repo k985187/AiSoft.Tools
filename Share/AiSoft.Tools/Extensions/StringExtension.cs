@@ -176,7 +176,28 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static bool IsNullOrEmpty(this string s)
         {
-            return string.IsNullOrEmpty(s);
+            return string.IsNullOrEmpty(s) || s.Equals("null", StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        /// <summary>
+        /// 转成非null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string AsNotNull(this string s)
+        {
+            return string.IsNullOrEmpty(s) ? "" : s;
+        }
+
+        /// <summary>
+        /// 转成非null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="value">为空时的替换值</param>
+        /// <returns></returns>
+        public static string IfNullOrEmpty(this string s, string value)
+        {
+            return string.IsNullOrEmpty(s) ? value : s;
         }
 
         /// <summary>
