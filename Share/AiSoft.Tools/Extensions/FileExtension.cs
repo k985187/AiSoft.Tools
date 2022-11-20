@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AiSoft.Tools.Files
+namespace AiSoft.Tools.Extensions
 {
     /// <summary>
     /// 大文件操作扩展类
@@ -36,19 +36,16 @@ namespace AiSoft.Tools.Files
         /// <param name="fs">源</param>
         /// <param name="dest">目标地址</param>
         /// <param name="bufferSize">缓冲区大小，默认8MB</param>
-        public static async void CopyToFileAsync(this Stream fs, string dest, int bufferSize = 1024 * 1024 * 8)
+        public static async Task CopyToFileAsync(this Stream fs, string dest, int bufferSize = 1024 * 1024 * 8)
         {
             using (var fsWrite = new FileStream(dest, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 var buf = new byte[bufferSize];
                 int len;
-                await Task.Run(() =>
+                while ((len = await fs.ReadAsync(buf, 0, buf.Length)) != 0)
                 {
-                    while ((len = fs.Read(buf, 0, buf.Length)) != 0)
-                    {
-                        fsWrite.Write(buf, 0, len);
-                    }
-                }).ConfigureAwait(true);
+                    await fsWrite.WriteAsync(buf, 0, len);
+                }
             }
         }
 
@@ -59,7 +56,7 @@ namespace AiSoft.Tools.Files
         /// <param name="filename"></param>
         public static void SaveFile(this MemoryStream ms, string filename)
         {
-            using (var fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
             {
                 var buffer = ms.ToArray(); // 转化为byte格式存储
                 fs.Write(buffer, 0, buffer.Length);
@@ -82,6 +79,20 @@ namespace AiSoft.Tools.Files
         public static string GetFileSha1(this Stream fs) => HashFile(fs, "sha1");
 
         /// <summary>
+        /// 计算文件的 sha256 值
+        /// </summary>
+        /// <param name="fs">源文件流</param>
+        /// <returns>sha256 值16进制字符串</returns>
+        public static string GetFileSha256(this Stream fs) => HashFile(fs, "sha256");
+
+        /// <summary>
+        /// 计算文件的 sha512 值
+        /// </summary>
+        /// <param name="fs">源文件流</param>
+        /// <returns>sha512 值16进制字符串</returns>
+        public static string GetFileSha512(this Stream fs) => HashFile(fs, "sha512");
+
+        /// <summary>
         /// 计算文件的哈希值
         /// </summary>
         /// <param name="fs">被操作的源数据流</param>
@@ -89,16 +100,22 @@ namespace AiSoft.Tools.Files
         /// <returns>哈希值16进制字符串</returns>
         private static string HashFile(Stream fs, string algo)
         {
-            HashAlgorithm crypto;
-            switch (algo)
+            HashAlgorithm crypto = MD5.Create();
+            switch(algo)
             {
                 case "sha1":
-                    crypto = new SHA1CryptoServiceProvider();
+                    crypto = SHA1.Create();
+                    break;
+                case "sha256":
+                    crypto = SHA256.Create();
+                    break;
+                case "sha512":
+                    crypto = SHA512.Create();
                     break;
                 default:
-                    crypto = new MD5CryptoServiceProvider();
+                    crypto = MD5.Create();
                     break;
-            }
+            };
             var retVal = crypto.ComputeHash(fs);
             var sb = new StringBuilder();
             foreach (var t in retVal)

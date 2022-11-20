@@ -39,6 +39,25 @@ namespace AiSoft.Tools.Extensions
         }
 
         /// <summary>
+        /// 流洗码，在流的末端随即增加几个空字节，重要数据请谨慎使用，可能造成流损坏
+        /// </summary>
+        /// <param name="stream"></param>
+        public static void ShuffleCode(this Stream stream)
+        {
+            if (stream.CanWrite && stream.CanSeek)
+            {
+                var position = stream.Position;
+                stream.Position = stream.Length;
+                for (var i = 0; i < new Random().Next(1, 20); i++)
+                {
+                    stream.WriteByte(0);
+                }
+                stream.Flush();
+                stream.Position = position;
+            }
+        }
+
+        /// <summary>
         /// 读取所有行
         /// </summary>
         /// <param name="stream"></param>

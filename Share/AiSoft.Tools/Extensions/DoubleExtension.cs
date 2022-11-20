@@ -5,23 +5,13 @@ namespace AiSoft.Tools.Extensions
     public static class DoubleExtension
     {
         /// <summary>
-        /// 将小数截断为8位
-        /// </summary>
-        /// <param name="num"></param>
-        /// <returns></returns>
-        public static double Digits8(this double num)
-        {
-            return (long)(num * 1E+8) * 1e-8;
-        }
-
-        /// <summary>
         /// 转decimal
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
         public static decimal ToDecimal(this double num)
         {
-            return num.ConvertTo<decimal>();
+            return (decimal)num;
         }
 
         /// <summary>
@@ -29,10 +19,11 @@ namespace AiSoft.Tools.Extensions
         /// </summary>
         /// <param name="num"></param>
         /// <param name="precision">小数位数</param>
+        /// <param name="mode">四舍五入策略</param>
         /// <returns></returns>
-        public static decimal ToDecimal(this double num, int precision)
+        public static decimal ToDecimal(this double num, int precision, MidpointRounding mode = MidpointRounding.AwayFromZero)
         {
-            return Math.Round(num.ConvertTo<decimal>(), precision);
+            return Math.Round((decimal)num, precision, mode);
         }
 
         /// <summary>
@@ -42,7 +33,7 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static decimal ToDecimal(this float num)
         {
-            return num.ConvertTo<decimal>();
+            return (decimal)num;
         }
 
         /// <summary>
@@ -50,10 +41,11 @@ namespace AiSoft.Tools.Extensions
         /// </summary>
         /// <param name="num"></param>
         /// <param name="precision">小数位数</param>
+        /// <param name="mode">四舍五入策略</param>
         /// <returns></returns>
-        public static decimal ToDecimal(this float num, int precision)
+        public static decimal ToDecimal(this float num, int precision, MidpointRounding mode = MidpointRounding.AwayFromZero)
         {
-            return Math.Round(num.ConvertTo<decimal>(), precision);
+            return Math.Round((decimal)num, precision, mode);
         }
     }
 }

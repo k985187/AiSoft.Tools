@@ -15,6 +15,11 @@ namespace AiSoft.Tools.Systems
         {
         }
 
+        public NullableConcurrentDictionary(TValue fallbackValue) : base()
+        {
+            FallbackValue = fallbackValue;
+        }
+
         public NullableConcurrentDictionary(int concurrencyLevel, int capacity) : base(concurrencyLevel, capacity)
         {
         }
@@ -23,11 +28,19 @@ namespace AiSoft.Tools.Systems
         {
         }
 
+        internal TValue FallbackValue { get; set; }
+
         public new TValue this[NullObject<TKey> key]
         {
-            get => TryGetValue(key, out var value) ? value : default;
+            get => TryGetValue(key, out var value) ? value : FallbackValue;
             set => base[key] = value;
         }
+
+        //public virtual TValue this[TKey key]
+        //{
+        //    get => TryGetValue(key, out var value) ? value : FallbackValue;
+        //    set => base[key] = value;
+        //}
 
         /// <summary>
         /// 隐式转换

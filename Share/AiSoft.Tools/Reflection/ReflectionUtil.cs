@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -135,16 +134,6 @@ namespace AiSoft.Tools.Reflection
         }
 
         /// <summary>
-        /// 获取枚举成员的Description信息
-        /// </summary>
-        /// <param name="value">枚举值</param>
-        /// <returns>返回枚举的Description或ToString</returns>
-        public static string GetDescription(this Enum value)
-        {
-            return GetDescription(value, null);
-        }
-
-        /// <summary>
         /// 获取枚举值的Description信息
         /// </summary>
         /// <param name ="value">枚举值</param>
@@ -168,7 +157,7 @@ namespace AiSoft.Tools.Reflection
             var text = attributes.Length > 0 ? attributes[0].Description : value.ToString();
             if (args != null && args.Length > 0)
             {
-                return string.Format(null, text, args);
+                return string.Format(text, args);
             }
 
             return text;
@@ -223,20 +212,7 @@ namespace AiSoft.Tools.Reflection
         }
 
         /// <summary>
-        /// 获取程序集资源的位图资源
-        /// </summary>
-        /// <param name="assemblyType">程序集中的某一对象类型</param>
-        /// <param name="resourceHolder">资源的根名称。例如，名为“MyResource.en-US.resources”的资源文件的根名称为“MyResource”。</param>
-        /// <param name="imageName">资源项名称</param>
-        //public static Bitmap LoadBitmap(this Type assemblyType, string resourceHolder, string imageName)
-        //{
-        //    var thisAssembly = Assembly.GetAssembly(assemblyType);
-        //    var rm = new ResourceManager(resourceHolder, thisAssembly);
-        //    return (Bitmap)rm.GetObject(imageName);
-        //}
-
-        /// <summary>
-        ///  获取程序集资源的文本资源
+        /// 获取程序集资源的文本资源
         /// </summary>
         /// <param name="assemblyType">程序集中的某一对象类型</param>
         /// <param name="resName">资源项名称</param>

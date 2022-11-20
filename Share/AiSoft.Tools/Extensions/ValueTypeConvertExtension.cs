@@ -57,17 +57,17 @@ namespace AiSoft.Tools.Extensions
         /// <returns>int类型的数字</returns>
         public static decimal ToDecimal(this string s, int round, decimal defaultValue = 0)
         {
-            return Math.Round(s.TryConvertTo(defaultValue), round);
+            return Math.Round(s.TryConvertTo(defaultValue), round, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
-        /// 将decimal转换成double
+        /// 转double
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="num"></param>
         /// <returns>double类型的数据</returns>
-        public static double ToDouble(this decimal s)
+        public static double ToDouble(this decimal num)
         {
-            return (double)s;
+            return (double)num;
         }
 
         /// <summary>
@@ -108,6 +108,64 @@ namespace AiSoft.Tools.Extensions
         public static decimal ToDecimal(this int num)
         {
             return new decimal(num);
+        }
+
+        /// <summary>
+        /// 保留小数
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="decimals"></param>
+        /// <param name="mode">四舍五入策略</param>
+        /// <returns></returns>
+        public static decimal Round(this decimal num, int decimals, MidpointRounding mode = MidpointRounding.AwayFromZero)
+        {
+            num = Math.Round(num, decimals, mode);
+            return num;
+        }
+
+        /// <summary>
+        /// 保留小数
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="decimals"></param>
+        /// <param name="mode">四舍五入策略</param>
+        /// <returns></returns>
+        public static double Round(this double num, int decimals, MidpointRounding mode = MidpointRounding.AwayFromZero)
+        {
+            num = Math.Round(num, decimals, mode);
+            return num;
+        }
+
+        /// <summary>
+        /// 保留小数
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="decimals"></param>
+        /// <param name="mode">四舍五入策略</param>
+        /// <returns></returns>
+        public static decimal? Round(this decimal? num, int decimals, MidpointRounding mode = MidpointRounding.AwayFromZero)
+        {
+            if (num.HasValue)
+            {
+                num = Math.Round(num.Value, decimals, mode);
+            }
+            return num;
+        }
+
+        /// <summary>
+        /// 保留小数
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="decimals"></param>
+        /// <param name="mode">四舍五入策略</param>
+        /// <returns></returns>
+        public static double? Round(this double? num, int decimals, MidpointRounding mode = MidpointRounding.AwayFromZero)
+        {
+            if (num.HasValue)
+            {
+                num = Math.Round(num.Value, decimals, mode);
+            }
+            return num;
         }
     }
 }

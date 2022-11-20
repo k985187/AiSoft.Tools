@@ -25,7 +25,7 @@ namespace AiSoft.Tools.Files
         /// <param name="zipFile">压缩到...</param>
         /// <param name="rootDir">压缩包内部根文件夹</param>
         /// <param name="archiveType"></param>
-        void Zip(IEnumerable<string> files, string zipFile, string rootDir = "", ArchiveType archiveType = ArchiveType.SevenZip);
+        void Zip(IEnumerable<string> files, string zipFile, string rootDir = "", ArchiveType archiveType = ArchiveType.Zip);
 
         /// <summary>
         /// 压缩多个文件
@@ -34,7 +34,7 @@ namespace AiSoft.Tools.Files
         /// <param name="zipFile">压缩到...</param>
         /// <param name="archiveType"></param>
         /// <param name="disposeAllStreams">是否需要释放所有流</param>
-        void Zip(DisposeableDictionary<string, Stream> streams, string zipFile, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false);
+        void Zip(DisposableDictionary<string, Stream> streams, string zipFile, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false);
 
         /// <summary>
         /// 将多个文件压缩到一个文件流中，可保存为zip文件，方便于web方式下载
@@ -43,7 +43,7 @@ namespace AiSoft.Tools.Files
         /// <param name="rootDir"></param>
         /// <param name="archiveType"></param>
         /// <returns>文件流</returns>
-        MemoryStream ZipStream(IEnumerable<string> files, string rootDir = "", ArchiveType archiveType = ArchiveType.SevenZip);
+        MemoryStream ZipStream(IEnumerable<string> files, string rootDir = "", ArchiveType archiveType = ArchiveType.Zip);
 
         /// <summary>
         /// 将多个文件压缩到一个文件流中，可保存为zip文件，方便于web方式下载
@@ -52,6 +52,6 @@ namespace AiSoft.Tools.Files
         /// <param name="archiveType"></param>
         /// <param name="disposeAllStreams">是否需要释放所有流</param>
         /// <returns>文件流</returns>
-        MemoryStream ZipStream(DisposeableDictionary<string, Stream> streams, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false);
+        MemoryStream ZipStream(DisposableDictionary<string, Stream> streams, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false);
     }
 }

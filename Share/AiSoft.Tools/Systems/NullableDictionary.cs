@@ -15,13 +15,18 @@ namespace AiSoft.Tools.Systems
         {
         }
 
+        public NullableDictionary(TValue fallbackValue) : base()
+        {
+            FallbackValue = fallbackValue;
+        }
+
         public NullableDictionary(int capacity) : base(capacity)
         {
         }
 
 #if NET
 
-        public NullableDictionary(IEqualityComparer<NullObject<TKey>>? comparer) : base(comparer)
+        public NullableDictionary(IEqualityComparer<NullObject<TKey>> comparer) : base(comparer)
         {
         }
 
@@ -34,10 +39,11 @@ namespace AiSoft.Tools.Systems
         {
         }
 
-        public NullableDictionary(IDictionary<NullObject<TKey>, TValue> dictionary,
-            IEqualityComparer<NullObject<TKey>> comparer) : base(dictionary, comparer)
+        public NullableDictionary(IDictionary<NullObject<TKey>, TValue> dictionary, IEqualityComparer<NullObject<TKey>> comparer) : base(dictionary, comparer)
         {
         }
+
+        internal TValue FallbackValue { get; set; }
 
         /// <summary>
         ///
@@ -45,9 +51,19 @@ namespace AiSoft.Tools.Systems
         /// <param name="key"></param>
         public new TValue this[NullObject<TKey> key]
         {
-            get => TryGetValue(key, out var value) ? value : default;
+            get => TryGetValue(key, out var value) ? value : FallbackValue;
             set => base[key] = value;
         }
+
+        ///// <summary>
+        /////
+        ///// </summary>
+        ///// <param name="key"></param>
+        //public virtual TValue this[TKey key]
+        //{
+        //    get => TryGetValue(key, out var value) ? value : FallbackValue;
+        //    set => base[key] = value;
+        //}
 
         /// <summary>
         /// 隐式转换

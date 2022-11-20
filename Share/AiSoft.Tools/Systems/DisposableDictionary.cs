@@ -9,14 +9,14 @@ namespace AiSoft.Tools.Systems
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public class DisposeableDictionary<TKey, TValue> : NullableDictionary<TKey, TValue>, IDisposable where TValue : IDisposable
+    public class DisposableDictionary<TKey, TValue> : NullableDictionary<TKey, TValue>, IDisposable where TValue : IDisposable
     {
         private bool _isDisposed;
 
         /// <summary>
         /// 终结器
         /// </summary>
-        ~DisposeableDictionary()
+        ~DisposableDictionary()
         {
             Dispose(false);
         }
@@ -36,15 +36,20 @@ namespace AiSoft.Tools.Systems
             GC.SuppressFinalize(this);
         }
 
-        public DisposeableDictionary() : base()
+        public DisposableDictionary() : base()
         {
         }
 
-        public DisposeableDictionary(int capacity) : base(capacity)
+        public DisposableDictionary(TValue fallbackValue) : base()
+        {
+            FallbackValue = fallbackValue;
+        }
+
+        public DisposableDictionary(int capacity) : base(capacity)
         {
         }
 
-        public DisposeableDictionary(IDictionary<NullObject<TKey>, TValue> dictionary) : base(dictionary)
+        public DisposableDictionary(IDictionary<NullObject<TKey>, TValue> dictionary) : base(dictionary)
         {
         }
 

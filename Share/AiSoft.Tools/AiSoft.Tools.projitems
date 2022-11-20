@@ -23,6 +23,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IConvertibleExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\FileExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\LinqExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IPAddressExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\LongExtension.cs" />
@@ -37,7 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Tree\Tree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Tree\TreeExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ValueTypeConvertExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Files\FileExt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Files\ISevenZipCompressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Files\SevenZipCompressor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ConsoleHelper.cs" />
@@ -73,8 +74,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Security\Internal\RsaSize.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Security\Shared\Check.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Strings\ChineseString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Strings\SimHash.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Strings\NumberFormater.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Systems\DisposeableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\DisposableConcurrentDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\DisposableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableConcurrentDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullObject.cs" />

@@ -15,7 +15,9 @@ namespace AiSoft.Tools.Extensions
 {
     public static class StringExtension
     {
-        public static string Join(this IEnumerable<string> strs, string separate = ", ") => string.Join(separate, strs);
+        public static string Join(this IEnumerable<string> strs, string separate = ", ", bool removeEmptyEntry = false) => string.Join(separate, removeEmptyEntry ? strs.Where(s => !string.IsNullOrEmpty(s)) : strs);
+
+        public static string Join<T>(this IEnumerable<T> strs, string separate = ", ", bool removeEmptyEntry = false) => string.Join(separate, removeEmptyEntry ? strs.Where(t => t != null) : strs);
 
         /// <summary>
         /// 字符串转时间
@@ -176,7 +178,7 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static bool IsNullOrEmpty(this string s)
         {
-            return string.IsNullOrEmpty(s) || s.Equals("null", StringComparison.CurrentCultureIgnoreCase);
+            return string.IsNullOrWhiteSpace(s) || s.Equals("null", StringComparison.CurrentCultureIgnoreCase);
         }
 
         /// <summary>
@@ -198,6 +200,17 @@ namespace AiSoft.Tools.Extensions
         public static string IfNullOrEmpty(this string s, string value)
         {
             return string.IsNullOrEmpty(s) ? value : s;
+        }
+
+        /// <summary>
+        /// 转成非null
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="valueFactory">为空时的替换值函数</param>
+        /// <returns></returns>
+        public static string IfNullOrEmpty(this string s, Func<string> valueFactory)
+        {
+            return string.IsNullOrEmpty(s) ? valueFactory() : s;
         }
 
         /// <summary>
@@ -472,29 +485,10 @@ namespace AiSoft.Tools.Extensions
         /// 匹配手机号码
         /// </summary>
         /// <param name="s">源字符串</param>
-        /// <param name="isMatch">是否匹配成功，若返回true，则会得到一个Match对象，否则为null</param>
-        /// <returns>匹配对象</returns>
-        public static Match MatchPhoneNumber(this string s, out bool isMatch)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                isMatch = false;
-                return null;
-            }
-            var match = Regex.Match(s, @"^((1[3,5,6,8][0-9])|(14[5,7])|(17[0,1,3,6,7,8])|(19[8,9]))\d{8}$");
-            isMatch = match.Success;
-            return isMatch ? match : null;
-        }
-
-        /// <summary>
-        /// 匹配手机号码
-        /// </summary>
-        /// <param name="s">源字符串</param>
         /// <returns>是否匹配成功</returns>
         public static bool MatchPhoneNumber(this string s)
         {
-            MatchPhoneNumber(s, out bool success);
-            return success;
+            return !string.IsNullOrEmpty(s) && s[0] == '1' && (s[1] > '2' || s[1] <= '9');
         }
 
         /// <summary>
@@ -527,7 +521,7 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static byte[] ToByteArray(this string @this)
         {
-            return Encoding.ASCII.GetBytes(@this);
+            return Encoding.UTF8.GetBytes(@this);
         }
 
         /// <summary>
@@ -641,6 +635,14 @@ $", RegexOptions.IgnorePatternWhitespace | RegexOptions.IgnoreCase | RegexOption
         {
             return s.Length > length ? s.Substring(0, length) : s;
         }
+
+        /// <summary>
+        /// 对比字符串的汉明距离
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="that"></param>
+        /// <returns></returns>
+        public static int HammingDistance(this string @this, string that) => new SimHash(@this).HammingDistance(new SimHash(that));
 
         #region 网页抓取
 

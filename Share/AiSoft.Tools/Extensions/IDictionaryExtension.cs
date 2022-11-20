@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AiSoft.Tools.Systems;
 
@@ -319,7 +320,26 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static NullableDictionary<TKey, TSource> ToDictionarySafety<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
-            var dic = new Dictionary<TKey, TSource>();
+            var dic = new NullableDictionary<TKey, TSource>(source.Count());
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = item;
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static NullableDictionary<TKey, TSource> ToDictionarySafety<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, TSource defaultValue)
+        {
+            var dic = new NullableDictionary<TKey, TSource>(source.Count()) { FallbackValue = defaultValue };
             foreach (var item in source)
             {
                 dic[keySelector(item)] = item;
@@ -339,7 +359,28 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static NullableDictionary<TKey, TElement> ToDictionarySafety<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
         {
-            var dic = new NullableDictionary<TKey, TElement>();
+            var dic = new NullableDictionary<TKey, TElement>(source.Count());
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = elementSelector(item);
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static NullableDictionary<TKey, TElement> ToDictionarySafety<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, TElement defaultValue)
+        {
+            var dic = new NullableDictionary<TKey, TElement>(source.Count()) { FallbackValue = defaultValue };
             foreach (var item in source)
             {
                 dic[keySelector(item)] = elementSelector(item);
@@ -357,9 +398,140 @@ namespace AiSoft.Tools.Extensions
         /// <param name="keySelector">键选择器</param>
         /// <param name="elementSelector">值选择器</param>
         /// <returns></returns>
-        public static async Task<NullableConcurrentDictionary<TKey, TElement>> ToDictionarySafetyAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector)
+        public static async Task<NullableDictionary<TKey, TElement>> ToDictionarySafetyAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector)
         {
-            var dic = new NullableConcurrentDictionary<TKey, TElement>();
+            var dic = new NullableDictionary<TKey, TElement>(source.Count());
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static async Task<NullableDictionary<TKey, TElement>> ToDictionarySafetyAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector, TElement defaultValue)
+        {
+            var dic = new NullableDictionary<TKey, TElement>(source.Count()) { FallbackValue = defaultValue };
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <returns></returns>
+        public static DisposableDictionary<TKey, TSource> ToDisposableDictionarySafety<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) where TSource : IDisposable
+        {
+            var dic = new DisposableDictionary<TKey, TSource>(source.Count());
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = item;
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static DisposableDictionary<TKey, TSource> ToDisposableDictionarySafety<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, TSource defaultValue) where TSource : IDisposable
+        {
+            var dic = new DisposableDictionary<TKey, TSource>(source.Count()) { FallbackValue = defaultValue };
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = item;
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <returns></returns>
+        public static DisposableDictionary<TKey, TElement> ToDisposableDictionarySafety<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector) where TElement : IDisposable
+        {
+            var dic = new DisposableDictionary<TKey, TElement>(source.Count());
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = elementSelector(item);
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static DisposableDictionary<TKey, TElement> ToDisposableDictionarySafety<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, TElement defaultValue) where TElement : IDisposable
+        {
+            var dic = new DisposableDictionary<TKey, TElement>(source.Count()) { FallbackValue = defaultValue };
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = elementSelector(item);
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <returns></returns>
+        public static async Task<DisposableDictionary<TKey, TElement>> ToDisposableDictionarySafetyAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector) where TElement : IDisposable
+        {
+            var dic = new DisposableDictionary<TKey, TElement>(source.Count());
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static async Task<DisposableDictionary<TKey, TElement>> ToDisposableDictionarySafetyAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector, TElement defaultValue) where TElement : IDisposable
+        {
+            var dic = new DisposableDictionary<TKey, TElement>(source.Count()) { FallbackValue = defaultValue };
             await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
             return dic;
         }
@@ -376,6 +548,25 @@ namespace AiSoft.Tools.Extensions
         public static NullableConcurrentDictionary<TKey, TSource> ToConcurrentDictionary<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             var dic = new NullableConcurrentDictionary<TKey, TSource>();
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = item;
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static NullableConcurrentDictionary<TKey, TSource> ToConcurrentDictionary<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, TSource defaultValue)
+        {
+            var dic = new NullableConcurrentDictionary<TKey, TSource>() { FallbackValue = defaultValue };
             foreach (var item in source)
             {
                 dic[keySelector(item)] = item;
@@ -413,9 +604,159 @@ namespace AiSoft.Tools.Extensions
         /// <param name="keySelector">键选择器</param>
         /// <param name="elementSelector">值选择器</param>
         /// <returns></returns>
+        public static NullableConcurrentDictionary<TKey, TElement> ToConcurrentDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, TElement defaultValue)
+        {
+            var dic = new NullableConcurrentDictionary<TKey, TElement>() { FallbackValue = defaultValue };
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = elementSelector(item);
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <returns></returns>
         public static async Task<NullableConcurrentDictionary<TKey, TElement>> ToConcurrentDictionaryAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector)
         {
             var dic = new ConcurrentDictionary<TKey, TElement>();
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static async Task<NullableConcurrentDictionary<TKey, TElement>> ToConcurrentDictionaryAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector, TElement defaultValue)
+        {
+            var dic = new NullableConcurrentDictionary<TKey, TElement>() { FallbackValue = defaultValue };
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <returns></returns>
+        public static DisposableConcurrentDictionary<TKey, TSource> ToDisposableConcurrentDictionary<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector) where TSource : IDisposable
+        {
+            var dic = new DisposableConcurrentDictionary<TKey, TSource>();
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = item;
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static DisposableConcurrentDictionary<TKey, TSource> ToDisposableConcurrentDictionary<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, TSource defaultValue) where TSource : IDisposable
+        {
+            var dic = new DisposableConcurrentDictionary<TKey, TSource>() { FallbackValue = defaultValue };
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = item;
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <returns></returns>
+        public static DisposableConcurrentDictionary<TKey, TElement> ToDisposableConcurrentDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector) where TElement : IDisposable
+        {
+            var dic = new DisposableConcurrentDictionary<TKey, TElement>();
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = elementSelector(item);
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <returns></returns>
+        public static DisposableConcurrentDictionary<TKey, TElement> ToDisposableConcurrentDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, TElement defaultValue) where TElement : IDisposable
+        {
+            var dic = new DisposableConcurrentDictionary<TKey, TElement>() { FallbackValue = defaultValue };
+            foreach (var item in source)
+            {
+                dic[keySelector(item)] = elementSelector(item);
+            }
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <returns></returns>
+        public static async Task<DisposableConcurrentDictionary<TKey, TElement>> ToDisposableConcurrentDictionaryAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector) where TElement : IDisposable
+        {
+            var dic = new DisposableConcurrentDictionary<TKey, TElement>();
+            await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
+            return dic;
+        }
+
+        /// <summary>
+        /// 安全的转换成字典集
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="keySelector">键选择器</param>
+        /// <param name="elementSelector">值选择器</param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static async Task<DisposableConcurrentDictionary<TKey, TElement>> ToDisposableConcurrentDictionaryAsync<TSource, TKey, TElement>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, Task<TElement>> elementSelector, TElement defaultValue) where TElement : IDisposable
+        {
+            var dic = new DisposableConcurrentDictionary<TKey, TElement>() { FallbackValue = defaultValue };
             await source.ForeachAsync(async item => dic[keySelector(item)] = await elementSelector(item));
             return dic;
         }
@@ -430,6 +771,24 @@ namespace AiSoft.Tools.Extensions
         public static NullableConcurrentDictionary<TKey, TValue> AsConcurrentDictionary<TKey, TValue>(this Dictionary<TKey, TValue> dic) => dic;
 
         /// <summary>
+        /// 转换成并发字典集合
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dic"></param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static NullableConcurrentDictionary<TKey, TValue> AsConcurrentDictionary<TKey, TValue>(this Dictionary<TKey, TValue> dic, TValue defaultValue)
+        {
+            var nullableDictionary = new NullableConcurrentDictionary<TKey, TValue>() { FallbackValue = defaultValue };
+            foreach (var p in dic)
+            {
+                nullableDictionary[p.Key] = p.Value;
+            }
+            return nullableDictionary;
+        }
+
+        /// <summary>
         /// 转换成普通字典集合
         /// </summary>
         /// <typeparam name="TKey"></typeparam>
@@ -437,5 +796,23 @@ namespace AiSoft.Tools.Extensions
         /// <param name="dic"></param>
         /// <returns></returns>
         public static NullableDictionary<TKey, TValue> AsDictionary<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dic) => dic;
+
+        /// <summary>
+        /// 转换成普通字典集合
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dic"></param>
+        /// <param name="defaultValue">键未找到时的默认值</param>
+        /// <returns></returns>
+        public static NullableDictionary<TKey, TValue> AsDictionary<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dic, TValue defaultValue)
+        {
+            var nullableDictionary = new NullableDictionary<TKey, TValue>() { FallbackValue = defaultValue };
+            foreach (var p in dic)
+            {
+                nullableDictionary[p.Key] = p.Value;
+            }
+            return nullableDictionary;
+        }
     }
 }

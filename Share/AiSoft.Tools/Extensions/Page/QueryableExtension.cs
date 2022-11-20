@@ -18,7 +18,7 @@ namespace AiSoft.Tools.Extensions
         //public static async Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> query, int page, int size)
         //{
         //    var totalCount = await query.CountAsync();
-        //    if (page * size > totalCount)
+        //    if (1L * page * size > totalCount)
         //    {
         //        page = (int)Math.Ceiling(totalCount / (size * 1.0));
         //    }
@@ -41,7 +41,7 @@ namespace AiSoft.Tools.Extensions
         public static PagedList<T> ToPagedList<T>(this IQueryable<T> query, int page, int size)
         {
             var totalCount = query.Count();
-            if (page * size > totalCount)
+            if (1L * page * size > totalCount)
             {
                 page = (int)Math.Ceiling(totalCount / (size * 1.0));
             }
@@ -64,7 +64,7 @@ namespace AiSoft.Tools.Extensions
         public static PagedList<T> ToPagedList<T>(this IEnumerable<T> query, int page, int size)
         {
             var totalCount = query.Count();
-            if (page * size > totalCount)
+            if (1L * page * size > totalCount)
             {
                 page = (int)Math.Ceiling(totalCount / (size * 1.0));
             }
