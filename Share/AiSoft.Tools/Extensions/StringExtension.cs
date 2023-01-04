@@ -70,7 +70,7 @@ namespace AiSoft.Tools.Extensions
         /// <param name="str"></param>
         /// <param name="newBase">进制</param>
         /// <returns></returns>
-        public static long FromBinary(this string str, byte newBase)
+        public static long FromBase(this string str, byte newBase)
         {
             var nf = new NumberFormater(newBase);
             return nf.FromString(str);
@@ -82,7 +82,7 @@ namespace AiSoft.Tools.Extensions
         /// <param name="str"></param>
         /// <param name="newBase">进制</param>
         /// <returns></returns>
-        public static BigInteger FromBinaryBig(this string str, byte newBase)
+        public static BigInteger FromBaseBig(this string str, byte newBase)
         {
             var nf = new NumberFormater(newBase);
             return nf.FromStringBig(str);
@@ -91,7 +91,7 @@ namespace AiSoft.Tools.Extensions
         #region 检测字符串中是否包含列表中的关键词
 
         /// <summary>
-        /// 检测字符串中是否包含列表中的关键词
+        /// 检测字符串中是否包含列表中的关键词(快速匹配)
         /// </summary>
         /// <param name="s">源字符串</param>
         /// <param name="keys">关键词列表</param>
@@ -99,15 +99,56 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static bool Contains(this string s, IEnumerable<string> keys, bool ignoreCase = true)
         {
-            if (!keys.Any() || string.IsNullOrEmpty(s))
+            //if (keys != ICollection<string> array)
+            //{
+            ICollection<string> array = keys.ToArray();
+            //}
+            if (array.Count == 0 || string.IsNullOrEmpty(s))
             {
                 return false;
             }
+            return ignoreCase ? array.Any(item => s.IndexOf(item, StringComparison.InvariantCultureIgnoreCase) >= 0) : array.Any(s.Contains);
+        }
+
+        /// <summary>
+        /// 检测字符串中是否包含列表中的关键词(安全匹配)
+        /// </summary>
+        /// <param name="s">源字符串</param>
+        /// <param name="keys">关键词列表</param>
+        /// <param name="ignoreCase">忽略大小写</param>
+        /// <returns></returns>
+        public static bool ContainsSafety(this string s, IEnumerable<string> keys, bool ignoreCase = true)
+        {
+            //if (keys != ICollection<string> array)
+            //{
+            ICollection<string> array = keys.ToArray();
+            //}
+            if (array.Count == 0 || string.IsNullOrEmpty(s))
+            {
+                return false;
+            }
+            var flag = false;
             if (ignoreCase)
             {
-                return Regex.IsMatch(s, string.Join("|", keys.Select(Regex.Escape)), RegexOptions.IgnoreCase);
+                foreach (var item in array)
+                {
+                    if (s.Contains(item))
+                    {
+                        flag = true;
+                    }
+                }
             }
-            return Regex.IsMatch(s, string.Join("|", keys.Select(Regex.Escape)));
+            else
+            {
+                foreach (var item in array)
+                {
+                    if (s.IndexOf(item, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    {
+                        flag = true;
+                    }
+                }
+            }
+            return flag;
         }
 
         /// <summary>
@@ -117,13 +158,39 @@ namespace AiSoft.Tools.Extensions
         /// <param name="keys">关键词列表</param>
         /// <param name="ignoreCase">忽略大小写</param>
         /// <returns></returns>
-        public static bool EndsWith(this string s, string[] keys, bool ignoreCase = true)
+        public static bool EndsWith(this string s, IEnumerable<string> keys, bool ignoreCase = true)
         {
-            if (keys.Length == 0 || string.IsNullOrEmpty(s))
+            //if (keys != ICollection<string> array)
+            //{
+            ICollection<string> array = keys.ToArray();
+            //}
+            if (array.Count == 0 || string.IsNullOrEmpty(s))
             {
                 return false;
             }
-            return ignoreCase ? keys.Any(key => s.EndsWith(key, StringComparison.CurrentCultureIgnoreCase)) : keys.Any(s.EndsWith);
+            var pattern = $"({array.Select(Regex.Escape).Join("|")})$";
+            return ignoreCase ? Regex.IsMatch(s, pattern, RegexOptions.IgnoreCase) : Regex.IsMatch(s, pattern);
+        }
+
+        /// <summary>
+        /// 检测字符串中是否以列表中的关键词开始
+        /// </summary>
+        /// <param name="s">源字符串</param>
+        /// <param name="keys">关键词列表</param>
+        /// <param name="ignoreCase">忽略大小写</param>
+        /// <returns></returns>
+        public static bool StartsWith(this string s, IEnumerable<string> keys, bool ignoreCase = true)
+        {
+            //if (keys != ICollection<string> array)
+            //{
+            ICollection<string> array = keys.ToArray();
+            //}
+            if (array.Count == 0 || string.IsNullOrEmpty(s))
+            {
+                return false;
+            }
+            var pattern = $"^({array.Select(Regex.Escape).Join("|")})";
+            return ignoreCase ? Regex.IsMatch(s, pattern, RegexOptions.IgnoreCase) : Regex.IsMatch(s, pattern);
         }
 
         /// <summary>
@@ -153,21 +220,6 @@ namespace AiSoft.Tools.Extensions
         /// <param name="regex">关键词列表</param>
         /// <returns></returns>
         public static bool RegexMatch(this string s, Regex regex) => !string.IsNullOrEmpty(s) && regex.IsMatch(s);
-
-        /// <summary>
-        /// 判断是否包含符号
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="symbols"></param>
-        /// <returns></returns>
-        public static bool ContainsSymbol(this string str, params string[] symbols)
-        {
-            if (str == null || string.IsNullOrEmpty(str) || str == string.Empty)
-            {
-                return false;
-            }
-            return symbols.Any(t => str.Contains(t));
-        }
 
         #endregion 检测字符串中是否包含列表中的关键词
 
@@ -455,6 +507,21 @@ namespace AiSoft.Tools.Extensions
         }
 
         /// <summary>
+        /// IP地址转换成数字
+        /// </summary>
+        /// <param name="ip">IP地址</param>
+        /// <returns>数字,输入无效IP地址返回0</returns>
+        public static uint ToUInt32(this IPAddress ip)
+        {
+            var bInt = ip.GetAddressBytes();
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bInt);
+            }
+            return BitConverter.ToUInt32(bInt, 0);
+        }
+
+        /// <summary>
         /// 判断IP是否是私有地址
         /// </summary>
         /// <param name="ip"></param>
@@ -477,8 +544,21 @@ namespace AiSoft.Tools.Extensions
         /// <returns></returns>
         public static bool IpAddressInRange(this string input, string begin, string ends)
         {
-            uint current = input.IPToID();
+            var current = input.IPToID();
             return current >= begin.IPToID() && current <= ends.IPToID();
+        }
+
+        /// <summary>
+        /// 判断IP地址在不在某个IP地址段
+        /// </summary>
+        /// <param name="input">需要判断的IP地址</param>
+        /// <param name="begin">起始地址</param>
+        /// <param name="ends">结束地址</param>
+        /// <returns></returns>
+        public static bool IpAddressInRange(this IPAddress input, IPAddress begin, IPAddress ends)
+        {
+            var current = input.ToUInt32();
+            return current >= begin.ToUInt32() && current <= ends.ToUInt32();
         }
 
         /// <summary>

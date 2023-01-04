@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using AiSoft.Tools.Systems;
 #if (NETCOREAPP || NET)
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,10 +18,16 @@ namespace AiSoft.Tools.Extensions
         /// </summary>
         /// <param name="stream"></param>
         /// <returns></returns>
-        public static MemoryStream SaveAsMemoryStream(this Stream stream)
+        public static PooledMemoryStream SaveAsMemoryStream(this Stream stream)
         {
-            stream.Position = 0;
-            return new MemoryStream(stream.ToArray());
+            if (stream is PooledMemoryStream pooledMemoryStream)
+            {
+                return pooledMemoryStream;
+            }
+            stream.Seek(0, SeekOrigin.Begin);
+            var ms = new PooledMemoryStream();
+            stream.CopyTo(ms);
+            return ms;
         }
 
         /// <summary>

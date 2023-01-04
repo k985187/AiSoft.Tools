@@ -38,11 +38,11 @@ namespace AiSoft.Tools.Files
         /// <param name="rootDir"></param>
         /// <param name="archiveType"></param>
         /// <returns>文件流</returns>
-        public MemoryStream ZipStream(IEnumerable<string> files, string rootDir = "", ArchiveType archiveType = ArchiveType.SevenZip)
+        public PooledMemoryStream ZipStream(IEnumerable<string> files, string rootDir = "", ArchiveType archiveType = ArchiveType.SevenZip)
         {
             using (var archive = CreateZipArchive(files, rootDir, archiveType))
             {
-                var ms = new MemoryStream();
+                var ms = new PooledMemoryStream();
                 archive.SaveTo(ms, new WriterOptions(CompressionType.LZMA)
                 {
                     LeaveStreamOpen = true,
@@ -59,7 +59,7 @@ namespace AiSoft.Tools.Files
         /// <param name="archiveType"></param>
         /// <param name="disposeAllStreams">是否需要释放所有流</param>
         /// <returns>文件流</returns>
-        public MemoryStream ZipStream(DisposableDictionary<string, Stream> streams, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false)
+        public PooledMemoryStream ZipStream(DisposableDictionary<string, Stream> streams, ArchiveType archiveType = ArchiveType.Zip, bool disposeAllStreams = false)
         {
             using (var archive = ArchiveFactory.Create(archiveType))
             {
@@ -68,7 +68,7 @@ namespace AiSoft.Tools.Files
                     archive.AddEntry(pair.Key, pair.Value, true);
                 }
 
-                var ms = new MemoryStream();
+                var ms = new PooledMemoryStream();
                 archive.SaveTo(ms, new WriterOptions(CompressionType.LZMA)
                 {
                     LeaveStreamOpen = true,

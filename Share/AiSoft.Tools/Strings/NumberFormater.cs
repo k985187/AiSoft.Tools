@@ -151,7 +151,9 @@ namespace AiSoft.Tools.Strings
                 resultOffset = _offset - 1;
             }
             var j = 0;
-            return new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch)).Sum(ch => (Characters.IndexOf(ch) + start) * (long)Math.Pow(Length, j++)) + resultOffset;
+            var chars = str.ToCharArray();
+            Array.Reverse(chars);
+            return new string(chars).Where(Characters.Contains).Sum(ch => (Characters.IndexOf(ch) + start) * (long)Math.Pow(Length, j++)) + resultOffset;
         }
 
         /// <summary>
@@ -169,7 +171,9 @@ namespace AiSoft.Tools.Strings
                 resultOffset = _offset - 1;
             }
             var j = 0;
-            var chars = new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch));
+            var charArray = str.ToCharArray();
+            Array.Reverse(charArray);
+            var chars = charArray.Where(Characters.Contains);
             return chars.Aggregate(BigInteger.Zero, (current, c) => current + (Characters.IndexOf(c) + start) * BigInteger.Pow(Length, j++)) + resultOffset;
         }
 

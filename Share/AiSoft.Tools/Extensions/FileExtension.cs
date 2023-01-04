@@ -54,7 +54,7 @@ namespace AiSoft.Tools.Extensions
         /// </summary>
         /// <param name="ms"></param>
         /// <param name="filename"></param>
-        public static void SaveFile(this MemoryStream ms, string filename)
+        public static void SaveFile(this Stream ms, string filename)
         {
             using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
             {

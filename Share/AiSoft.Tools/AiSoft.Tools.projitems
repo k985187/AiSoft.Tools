@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IDictionaryExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IEnumerableExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\FileExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ObjectExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\LinqExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IntExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\IPAddressExtension.cs" />
@@ -80,6 +81,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Systems\DisposableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableConcurrentDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullableDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\LargeMemoryStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Systems\PooledMemoryStream.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Systems\NullObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncLock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\CustomException.cs" />

@@ -162,7 +162,8 @@ namespace AiSoft.Tools.Net
         /// </summary>
         /// <param name="sourceUrl"></param>
         /// <param name="numOfParts"></param>
-        public MultiThreadDownloader(string sourceUrl, int numOfParts) : this(sourceUrl, null, numOfParts)
+        public MultiThreadDownloader(string sourceUrl, int numOfParts)
+            : this(sourceUrl, null, numOfParts)
         {
         }
 
@@ -177,7 +178,7 @@ namespace AiSoft.Tools.Net
                 return;
             }
 
-            PartialDownloaderList.Sort((x, y) => y.RemainingBytes - x.RemainingBytes);
+            PartialDownloaderList.Sort((x, y) => (int)(y.RemainingBytes - x.RemainingBytes));
             var rem = PartialDownloaderList[0].RemainingBytes;
             if (rem < 50 * 1024)
             {
@@ -291,8 +292,8 @@ namespace AiSoft.Tools.Net
 
         private PartialDownloader CreateNew(int order, int parts, long contentLength)
         {
-            var division = (int)contentLength / parts;
-            var remaining = (int)contentLength % parts;
+            var division = contentLength / parts;
+            var remaining = contentLength % parts;
             var start = division * order;
             var end = start + division - 1;
             end += order == parts - 1 ? remaining : 0;
