@@ -262,7 +262,7 @@ namespace AiSoft.Tools.Net
             foreach (var item in mergeOrderedList)
             {
                 var pdi = File.OpenRead(item.FullPath);
-                var buffer = new byte[4096];
+                var buffer = new byte[4096 * 1024];
                 int read;
                 while ((read = pdi.Read(buffer, 0, buffer.Length)) > 0)
                 {
